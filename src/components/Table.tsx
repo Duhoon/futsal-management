@@ -1,18 +1,23 @@
+import { FaTshirt } from 'react-icons/fa';
 import './table.scss';
 
 interface TableProps {
-  header?: string[],
-  rows?: any[],
+  index: number,
+  header: string[],
+  rows: any[],
 }
 
-export default function Table ({header, rows}: TableProps){
+export default function Table ({index, header, rows}: TableProps){
   return (
     <div className='list-table-wrapper'>
-      <h1 className='list-table-title'>팀 1</h1>
+      <div className='list-table-head'>
+        <h1 className='list-table-title'>팀 {index}</h1>
+        <FaTshirt className='list-table-color'/>
+      </div>
       <ul className='list-table'>
         <li className='list-table-row list-table-header'>
-          <dt className='list-table-index'>번호</dt>
-          <dd className='list-table-value'>이름</dd>
+          <dt className='list-table-index'>{header[0]}</dt>
+          <dd className='list-table-value'>{header[1]}</dd>
         </li>
         { rows.map((row, index)=>{
           return(

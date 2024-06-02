@@ -1,0 +1,12 @@
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-evenly;
+}
+
+@media (min-width: 368px){
+  .board {
+    flex-direction: row;
+  }
+}

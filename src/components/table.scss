@@ -4,12 +4,28 @@
   width: 100%;
   margin: 0 auto;
 
-  .list-table-title {
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    border-bottom: 5px double #ebebeb;
-    text-align: center;
-    padding: 0.5rem;
+  .list-table-head {
+    position: relative;
+
+    .list-table-title {
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+      border-bottom: 5px double #ebebeb;
+      text-align: center;
+      padding: 0.5rem;
+    }
+    
+    .list-table-color {
+      position: absolute;
+      right: 1rem;
+      top: 0.5rem;
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .list-table-color:hover {
+      cursor: pointer;
+    }
   }
 
   .list-table-row {
