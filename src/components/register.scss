@@ -1,0 +1,52 @@
+.register-form-warpper {
+  margin: 0 auto;
+  width: 100%;
+
+  .register-form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    
+    label {
+      padding: 0.5rem;
+      font-size: 1.2rem;
+      text-align: center;
+      width: 20%;
+    }
+    
+    input {
+      padding: 0.2rem 0.2rem 0.1rem 0.2rem;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #ebebeb;
+      caret-shape: bar;
+      outline: none;
+      width: 80%;
+    }
+  }
+
+  .button-group {
+    padding: 1.2rem 0;
+    display: flex;
+    justify-content: space-evenly;
+
+    button {
+      width: 150px;
+      border: 1px solid #ebebeb;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.5rem;
+    }
+
+    button:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+
+@media (min-width: 368px){
+  .register-form-warpper {
+    width: 360px;
+  }
+}
