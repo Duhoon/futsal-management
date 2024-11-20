@@ -1,6 +1,31 @@
-
-.logo {
+.header {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    position: relative;
     background-color: $black-color;
     color: $white-color;
     text-align: center;
+    width: 100%;
+    height: $header-height;
+    padding: 0 1.5rem;
+
+    .logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .menu-bar {
+        .menu-button {
+            background-color: transparent;
+            .menu-icon {
+                width: 2rem;
+                height: 2rem;
+            }
+        }
+    }
 }

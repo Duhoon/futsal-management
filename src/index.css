@@ -11,6 +11,7 @@
   margin: 0;
   border: none;
   list-style: none;
+  outline: none;
   font-size: 1rem;
   font-weight: 500;
 }
