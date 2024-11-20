@@ -1,14 +1,10 @@
-import { ReactNode } from "react"
-import './board.scss';
+import { ReactNode } from "react";
+import "./board.scss";
 
 interface BoardProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
-export default function Board({children}: BoardProps){
-  return(
-    <div className='board'>
-      {children}
-    </div>
-  )
+export default function Board({ children }: BoardProps) {
+  return <div className="board">{children}</div>;
 }
