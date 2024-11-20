@@ -1,11 +1,12 @@
-import { Header } from './components';
+import { Field, Header } from "./components";
 
 function App() {
   return (
     <>
-      <Header/>
+      <Header />
+      <Field />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
