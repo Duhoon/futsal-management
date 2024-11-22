@@ -1,3 +1,3 @@
 export interface List {
-  name: string;
+    name: string;
 }

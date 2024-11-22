@@ -1,12 +1,12 @@
 import { Field, Header } from "./components";
 
 function App() {
-  return (
-    <>
-      <Header />
-      <Field />
-    </>
-  );
+    return (
+        <>
+            <Header />
+            <Field />
+        </>
+    );
 }
 
 export default App;

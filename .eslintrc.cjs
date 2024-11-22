@@ -16,5 +16,11 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'typescript-eslint/no-explicit-any': 0,
+    'prettier/prettier': [
+      'error',
+      {
+        tabWidth: 4
+      }
+    ]
   },
 }
