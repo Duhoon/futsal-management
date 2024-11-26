@@ -1,6 +1,11 @@
+import Player from "./Player";
+import { Coord } from "./types";
+
 const fieldPadding = 20;
 
 export default class FieldDrawer {
+    private players: Player[] = [];
+
     constructor(
         private canvas: HTMLCanvasElement,
         private ctx: CanvasRenderingContext2D,
@@ -15,6 +20,8 @@ export default class FieldDrawer {
 
         // field outline
         this.ctx.fillStyle = "rgb(255 255 255 / 0%)";
+        this.ctx.strokeStyle = "white";
+        this.ctx.lineWidth = 4;
         this.ctx.strokeRect(
             fieldPadding,
             fieldPadding,
@@ -23,14 +30,13 @@ export default class FieldDrawer {
         );
 
         // filed middle line
-        this.ctx.strokeStyle = "white";
         this.ctx.beginPath();
+        this.ctx.strokeStyle = "white";
         this.ctx.moveTo(0 + fieldPadding, Math.floor(this.canvas.height / 2));
         this.ctx.lineTo(
             this.canvas.width - fieldPadding,
             Math.floor(this.canvas.height / 2),
         );
-        this.ctx.lineWidth = 4;
         this.ctx.stroke();
 
         // field middle circle-area
@@ -44,5 +50,20 @@ export default class FieldDrawer {
             false,
         );
         this.ctx.stroke();
+    }
+
+    drawPlayer(coord: Coord) {
+        const radius = this.canvas.height / 32;
+
+        this.ctx.beginPath();
+        this.ctx.arc(coord.x, coord.y, radius, 0, Math.PI * 2);
+        this.ctx.fillStyle = "red";
+        this.ctx.fill();
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeStyle = "black";
+        this.ctx.stroke();
+
+        const player = new Player(coord, radius, this.players.length + 1, " ");
+        this.players.push(player);
     }
 }
