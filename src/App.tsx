@@ -1,12 +1,19 @@
+import { useState } from "react";
 import { Field, Board } from "./components";
 import { Header } from "./components/layout";
 
 function App() {
+    const [isOpenBoard, setIsOpenBoard] = useState(false);
+
+    const toggleIsOpenBoard = () => {
+        setIsOpenBoard(!isOpenBoard);
+    };
+
     return (
         <>
-            <Header />
+            <Header toggleBoard={toggleIsOpenBoard} />
             <Field />
-            <Board isOpen={true} />
+            <Board isOpen={isOpenBoard} toggleBoard={toggleIsOpenBoard} />
         </>
     );
 }

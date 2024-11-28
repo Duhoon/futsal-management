@@ -6,10 +6,11 @@
   top: 0;
   padding: 1rem;
   background-color: $black-color;
+  transition: 0.5s;
+  overflow-y:scroll;
 
   &-collapsed {
     right: -300px;
-    transition: 0.5s;
   }
 
   .head {
