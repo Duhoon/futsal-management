@@ -52,18 +52,30 @@ export default class FieldDrawer {
         this.ctx.stroke();
     }
 
-    drawPlayer(coord: Coord) {
+    drawPlayer(coord: Coord): FieldDrawer {
         const radius = this.canvas.height / 32;
 
+        this.ctx.save();
+
         this.ctx.beginPath();
-        this.ctx.arc(coord.x, coord.y, radius, 0, Math.PI * 2);
+        this.ctx.translate(coord.x, coord.y);
+        this.ctx.arc(0, 0, radius, 0, Math.PI * 2);
         this.ctx.fillStyle = "red";
-        this.ctx.fill();
         this.ctx.lineWidth = 2;
         this.ctx.strokeStyle = "black";
+
+        this.ctx.fill();
         this.ctx.stroke();
 
-        const player = new Player(coord, radius, this.players.length + 1, " ");
+        this.ctx.restore();
+
+        const player = new Player(coord, this.players.length + 1, " ");
         this.players.push(player);
+
+        return this;
+    }
+
+    save() {
+        this.ctx.save();
     }
 }

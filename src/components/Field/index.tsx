@@ -2,7 +2,6 @@ import styles from "@/styles/field/field.module.scss";
 import { MouseEvent, useEffect, useRef } from "react";
 import { useViewport } from "@/hooks";
 import FieldDrawer from "./FieldDrawer";
-import Player from "./Player";
 
 export default function Field() {
     const [viewport] = useViewport();
@@ -24,8 +23,9 @@ export default function Field() {
             const fieldDrawer = new FieldDrawer(ref.current, ctx);
             fieldDrawer.render();
 
-            fieldDrawer.drawPlayer({ x: 100, y: 100 });
-            fieldDrawer.drawPlayer({ x: 100, y: 500 });
+            fieldDrawer
+                .drawPlayer({ x: 100, y: 500 })
+                .drawPlayer({ x: 200, y: 500 });
         }
     }, [ref, viewport]);
 

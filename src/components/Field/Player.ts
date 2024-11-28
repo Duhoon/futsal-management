@@ -1,4 +1,4 @@
-import { Coord, Radius } from "./types";
+import { Coord } from "./types";
 
 export default class Player {
     number: number;
@@ -6,7 +6,6 @@ export default class Player {
 
     constructor(
         private coord: Coord,
-        private radius: Radius,
         number: number,
         name: string,
     ) {
@@ -16,9 +15,5 @@ export default class Player {
 
     getCoord(): Coord {
         return this.coord;
-    }
-
-    getRadius(): Radius {
-        return this.radius;
     }
 }

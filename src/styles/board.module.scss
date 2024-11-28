@@ -1,0 +1,37 @@
+.board {
+  position:fixed;
+  height: 100vh;
+  width: 300px;
+  right: 0;
+  top: 0;
+  padding: 1rem;
+  background-color: $black-color;
+
+  &-collapsed {
+    right: -300px;
+    transition: 0.5s;
+  }
+
+  .head {
+    display: flex;
+    justify-content: right;
+
+    background-color: transparent;
+    .icon-button{
+      background-color: inherit;
+
+      .x-icon {
+        color: $white-color;
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
+
+  .body {
+    margin-top: 1rem;
+    border-radius: 1rem;
+    background-color: $white-color;
+    padding: 1rem;
+  }
+}
