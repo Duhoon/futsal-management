@@ -1,9 +1,10 @@
 .squad-container {
     padding: 1rem;
+    position: relative;
     
     .player-board-container {
         width: 100%;
-
+        
         .preview {
             display: block;
             margin: 0 auto;

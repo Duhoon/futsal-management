@@ -1,9 +1,12 @@
 import { ChangeEvent, useState } from "react";
 import styles from "@/styles/board/squad.module.scss";
-import { CirclePicker } from "react-color";
+import ColorBox from "./ColorBox";
+import { ColorChangeHandler } from "react-color";
 
 export default function Squad() {
-    const [color, setColor] = useState();
+    const [isColorBoxOpen, setIsColorBoxOpen] = useState(false);
+
+    const [color, setColor] = useState("");
     const [num, setNum] = useState(0);
 
     const increaseNum = () => {
@@ -20,12 +23,30 @@ export default function Squad() {
         }
     };
 
+    const openColorBox = () => {
+        setIsColorBoxOpen(true);
+    };
+
+    const handleColorChange: ColorChangeHandler = ({ hex }) => {
+        setColor(hex);
+        setIsColorBoxOpen(false);
+    };
+
     return (
         <div className={styles["squad-container"]}>
             {/* <CirclePicker colors={["black", "red"]} width={"100%"} /> */}
             <div className={styles["player-board-container"]}>
-                <button className={styles["preview"]} type="button" />
+                <button
+                    className={styles["preview"]}
+                    style={{ backgroundColor: color }}
+                    type="button"
+                    onClick={openColorBox}
+                />
                 <input hidden />
+                <ColorBox
+                    isOpen={isColorBoxOpen}
+                    onChange={handleColorChange}
+                />
             </div>
             <div className={styles["num-board-container"]}>
                 <button

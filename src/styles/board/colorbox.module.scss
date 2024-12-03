@@ -1,0 +1,9 @@
+.colorbox {
+    width: inherit;
+    background-color: $white-color;
+    border-radius: $common-border-radius;
+    position: absolute;
+    left: 0;
+    transform: translate(0, 25%);
+    padding-top: 0.5rem;
+}
