@@ -37,7 +37,6 @@ export default function Squad() {
                 <input
                     className={styles["display"]}
                     onChange={changeNum}
-                    type="number"
                     value={num}
                 />
                 <button

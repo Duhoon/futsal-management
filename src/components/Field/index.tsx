@@ -36,7 +36,7 @@ export default function Field() {
     // }, [players]);
 
     return (
-        <main style={{ width: "100%" }}>
+        <main>
             <canvas
                 className={styles.field}
                 ref={ref}
