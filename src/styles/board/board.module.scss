@@ -9,6 +9,12 @@
   transition: 0.5s;
   overflow-y:scroll;
 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   &-collapsed {
     right: -300px;
   }
