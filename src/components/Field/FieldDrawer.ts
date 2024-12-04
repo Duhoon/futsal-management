@@ -1,11 +1,9 @@
 import Player from "./Player";
-import { Coord } from "./types";
+import Team from "./Team";
 
 const fieldPadding = 20;
 
 export default class FieldDrawer {
-    private players: Player[] = [];
-
     constructor(
         private canvas: HTMLCanvasElement,
         private ctx: CanvasRenderingContext2D,
@@ -52,27 +50,38 @@ export default class FieldDrawer {
         this.ctx.stroke();
     }
 
-    drawPlayer(coord: Coord): FieldDrawer {
-        const radius = this.canvas.height / 32;
+    // drawPlayer(coord: Coord): FieldDrawer {
+    //     this.ctx.save();
 
-        this.ctx.save();
+    //     this._drawPlayer(coord);
 
-        this.ctx.beginPath();
-        this.ctx.translate(coord.x, coord.y);
-        this.ctx.arc(0, 0, radius, 0, Math.PI * 2);
-        this.ctx.fillStyle = "red";
-        this.ctx.lineWidth = 2;
-        this.ctx.strokeStyle = "black";
+    //     this.ctx.restore();
 
-        this.ctx.fill();
-        this.ctx.stroke();
+    //     return this;
+    // }
 
-        this.ctx.restore();
+    drawTeam(team: Team): FieldDrawer {
+        // this.ctx.save();
 
-        const player = new Player(coord, this.players.length + 1, " ");
-        this.players.push(player);
+        for (const player of team.players) {
+            this._drawPlayer(player, team.color);
+        }
 
         return this;
+    }
+
+    private _drawPlayer(player: Player, color: string): void {
+        const radius = this.canvas.height / 32;
+        const { x, y } = player.coord;
+
+        this.ctx.beginPath();
+        // this.ctx.translate(coord.x, coord.y);
+        this.ctx.arc(x, y, radius, 0, Math.PI * 2);
+        this.ctx.fillStyle = color;
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeStyle = "black";
+        this.ctx.fill();
+        this.ctx.stroke();
     }
 
     save() {

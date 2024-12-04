@@ -2,9 +2,9 @@ export const PLAYER_COLORS = [
     "red",
     "orange",
     "yellow",
-    "green",
+    "black",
     "blue",
-    "purple",
+    "pink",
 ];
 
 export default {

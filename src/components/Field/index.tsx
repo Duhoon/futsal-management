@@ -1,12 +1,12 @@
 import styles from "@/styles/field/field.module.scss";
-import { MouseEvent, useEffect, useRef } from "react";
+import { ForwardedRef, forwardRef, MouseEvent } from "react";
 import { useViewport } from "@/hooks";
-import FieldDrawer from "./FieldDrawer";
 
-export default function Field() {
+export const Field = forwardRef(function Field(
+    props,
+    ref: ForwardedRef<HTMLCanvasElement>,
+) {
     const [viewport] = useViewport();
-    const ref = useRef<HTMLCanvasElement>(null);
-    // const [players, setPlayers] = useState<Player[]>([]);
 
     const mouseMoveHandler = (e: MouseEvent<HTMLCanvasElement>) => {
         console.log({
@@ -14,20 +14,6 @@ export default function Field() {
             y: e.clientY - e.currentTarget.offsetTop,
         });
     };
-
-    useEffect(() => {
-        if (ref?.current && window) {
-            const ctx = ref.current.getContext("2d", {
-                alpha: 1,
-            }) as CanvasRenderingContext2D;
-            const fieldDrawer = new FieldDrawer(ref.current, ctx);
-            fieldDrawer.render();
-
-            fieldDrawer
-                .drawPlayer({ x: 100, y: 500 })
-                .drawPlayer({ x: 200, y: 500 });
-        }
-    }, [ref, viewport]);
 
     // useEffect(() => {
     //     if (ref?.current && window) {
@@ -46,4 +32,4 @@ export default function Field() {
             ></canvas>
         </main>
     );
-}
+});

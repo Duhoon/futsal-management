@@ -1,18 +1,21 @@
 import styles from "@/styles/board/board.module.scss";
 import { useRef } from "react";
 import { FaX } from "react-icons/fa6";
+import classNames from "classnames/bind";
+
 import Squad from "./Squad";
 
-import classNames from "classnames/bind";
+import Team from "../Field/Team";
 
 const cn = classNames.bind(styles);
 
 interface BoardProps {
+    teams: Team[];
     isOpen: boolean;
     toggleBoard: () => void;
 }
 
-export default function Board({ isOpen, toggleBoard }: BoardProps) {
+export default function Board({ teams, isOpen, toggleBoard }: BoardProps) {
     const ref = useRef<HTMLDivElement>(null);
 
     return (
@@ -23,7 +26,9 @@ export default function Board({ isOpen, toggleBoard }: BoardProps) {
                 </button>
             </div>
             <div className={styles.body}>
-                <Squad />
+                {teams.map((team, idx) => (
+                    <Squad key={idx} team={team} teamOrder={idx} />
+                ))}
             </div>
         </div>
     );
