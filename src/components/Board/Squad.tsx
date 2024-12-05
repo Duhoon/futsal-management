@@ -1,10 +1,9 @@
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import styles from "@/styles/board/squad.module.scss";
 import ColorBox from "./ColorBox";
 import { ColorChangeHandler } from "react-color";
 import Team from "../Field/Team";
 import Player from "../Field/Player";
-import { DrawerCtx } from "@/contexts/DrawerCtx";
 import { useViewport } from "@/hooks";
 
 interface SquadProps {
@@ -13,7 +12,7 @@ interface SquadProps {
 }
 
 export default function Squad({ team, teamOrder }: SquadProps) {
-    const drawer = useContext(DrawerCtx)!;
+    // const drawer = useContext(DrawerCtx)!;
     const [viewport] = useViewport();
 
     const [isColorBoxOpen, setIsColorBoxOpen] = useState(false);
@@ -31,14 +30,14 @@ export default function Squad({ team, teamOrder }: SquadProps) {
                     y: yDist * (teamOrder + 1),
                 }),
             );
-            drawer.drawTeam(team);
+            // drawer.drawTeam(team);
         }
     };
 
     const decreaseNum = () => {
         setNum((pre) => (pre - 1 >= 0 ? pre - 1 : pre));
         team.players.pop();
-        drawer.drawTeam(team);
+        // drawer.drawTeam(team);
     };
 
     const changeNum = (e: ChangeEvent<HTMLInputElement>) => {

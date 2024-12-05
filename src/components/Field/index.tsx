@@ -1,5 +1,5 @@
 import styles from "@/styles/field/field.module.scss";
-import { ForwardedRef, forwardRef, MouseEvent } from "react";
+import { ForwardedRef, forwardRef } from "react";
 import { useViewport } from "@/hooks";
 
 export const Field = forwardRef(function Field(
@@ -7,13 +7,6 @@ export const Field = forwardRef(function Field(
     ref: ForwardedRef<HTMLCanvasElement>,
 ) {
     const [viewport] = useViewport();
-
-    const mouseMoveHandler = (e: MouseEvent<HTMLCanvasElement>) => {
-        console.log({
-            x: e.clientX - e.currentTarget.offsetLeft,
-            y: e.clientY - e.currentTarget.offsetTop,
-        });
-    };
 
     // useEffect(() => {
     //     if (ref?.current && window) {
@@ -28,7 +21,6 @@ export const Field = forwardRef(function Field(
                 ref={ref}
                 width={viewport?.width}
                 height={(viewport?.height || 0) - 70}
-                onMouseMove={mouseMoveHandler}
             ></canvas>
         </main>
     );

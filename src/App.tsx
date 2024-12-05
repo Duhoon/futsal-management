@@ -5,11 +5,12 @@ import Team from "./components/Field/Team";
 import { useViewport } from "./hooks";
 import FieldDrawer from "./components/Field/FieldDrawer";
 import { DrawerCtx } from "./contexts/DrawerCtx";
+import * as fabric from "fabric";
 
 function App() {
     const [viewport] = useViewport();
     const ref = useRef<HTMLCanvasElement>(null);
-    const [drawer, setDrawer] = useState<FieldDrawer | null>(null);
+    // const [drawer, setDrawer] = useState<FieldDrawer | null>(null);
 
     const [isOpenBoard, setIsOpenBoard] = useState(false);
     const teams = [new Team(""), new Team("")];
@@ -19,19 +20,22 @@ function App() {
     };
 
     useEffect(() => {
-        if (ref?.current && window) {
-            const ctx = ref.current.getContext("2d", {
-                alpha: 1,
-            }) as CanvasRenderingContext2D;
-            const fieldDrawer = new FieldDrawer(ref.current, ctx);
-            fieldDrawer.render();
-            setDrawer(fieldDrawer);
-        }
+        const canvas = new fabric.Canvas(ref.current!, {
+            width: viewport?.width,
+            height: (viewport?.height || 0) - 70,
+        });
+        const ctx = canvas.getContext();
+        const fieldDrawer = new FieldDrawer(ref.current!, ctx);
+        fieldDrawer.render();
+
+        return () => {
+            canvas.dispose();
+        };
     }, [ref, viewport]);
 
     return (
         <>
-            <DrawerCtx.Provider value={drawer}>
+            <DrawerCtx.Provider value={null}>
                 <Header toggleBoard={toggleIsOpenBoard} />
                 <Field ref={ref} />
                 <Board
