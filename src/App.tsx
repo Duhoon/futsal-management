@@ -10,7 +10,7 @@ import * as fabric from "fabric";
 function App() {
     const [viewport] = useViewport();
     const ref = useRef<HTMLCanvasElement>(null);
-    // const [drawer, setDrawer] = useState<FieldDrawer | null>(null);
+    const [drawer, setDrawer] = useState<FieldDrawer | null>(null);
 
     const [isOpenBoard, setIsOpenBoard] = useState(false);
     const teams = [new Team(""), new Team("")];
@@ -25,8 +25,9 @@ function App() {
             height: (viewport?.height || 0) - 70,
         });
         const ctx = canvas.getContext();
-        const fieldDrawer = new FieldDrawer(ref.current!, ctx);
+        const fieldDrawer = new FieldDrawer(ref.current!, canvas, ctx);
         fieldDrawer.render();
+        setDrawer(fieldDrawer);
 
         return () => {
             canvas.dispose();
@@ -35,7 +36,7 @@ function App() {
 
     return (
         <>
-            <DrawerCtx.Provider value={null}>
+            <DrawerCtx.Provider value={drawer}>
                 <Header toggleBoard={toggleIsOpenBoard} />
                 <Field ref={ref} />
                 <Board

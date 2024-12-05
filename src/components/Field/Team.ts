@@ -12,4 +12,8 @@ export default class Team {
     setColor(color: string) {
         this.color = color;
     }
+
+    addPlayer(player: Player) {
+        this.players.push(player);
+    }
 }
