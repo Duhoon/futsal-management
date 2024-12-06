@@ -8,13 +8,14 @@ export default class Player {
     coord: Coord;
     statue: Circle;
 
-    constructor(coord: Coord) {
+    constructor(coord: Coord, color: string) {
         this.name = "";
         this.coord = coord;
         this.statue = new Circle({
             radius: this.radius,
             stroke: "black",
             strokeWidth: 4,
+            fill: color,
             left: coord.x,
             right: coord.y,
             lockScalingX: true,

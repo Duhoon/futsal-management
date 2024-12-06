@@ -7,13 +7,14 @@ import FieldDrawer from "./tools/Drawer";
 import { DrawerCtx } from "./contexts/DrawerCtx";
 import * as fabric from "fabric";
 
+const teams = [new Team(""), new Team("")];
+
 function App() {
     const [viewport] = useViewport();
     const ref = useRef<HTMLCanvasElement>(null);
     const [drawer, setDrawer] = useState<FieldDrawer | null>(null);
 
     const [isOpenBoard, setIsOpenBoard] = useState(false);
-    const teams = [new Team(""), new Team("")];
 
     const toggleIsOpenBoard = () => {
         setIsOpenBoard(!isOpenBoard);

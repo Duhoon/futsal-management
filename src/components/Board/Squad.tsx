@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import styles from "@/styles/board/squad.module.scss";
 import ColorBox from "./ColorBox";
 import { ColorChangeHandler } from "react-color";
@@ -26,10 +26,13 @@ export default function Squad({ team, teamOrder }: SquadProps) {
             const xDist = Math.floor((viewport!.width || 0) / 6);
             const yDist = Math.floor((viewport!.height - 70 || 0) / 3);
             team.players.push(
-                new Player({
-                    x: xDist * (num + 1),
-                    y: yDist * (teamOrder + 1),
-                }),
+                new Player(
+                    {
+                        x: xDist * (num + 1),
+                        y: yDist * (teamOrder + 1),
+                    },
+                    team.color,
+                ),
             );
             drawer.drawTeam(team);
         }
@@ -56,8 +59,12 @@ export default function Squad({ team, teamOrder }: SquadProps) {
         setColor(hex);
         team.setColor(hex);
         setIsColorBoxOpen(false);
-        drawer.drawTeam(team);
+        drawer.renderAll();
     };
+
+    useEffect(() => {
+        console.log(team);
+    }, [team]);
 
     return (
         <div className={styles["squad-container"]}>

@@ -11,7 +11,11 @@ export default class Team {
 
     setColor(color: string) {
         this.color = color;
-        this.players.forEach((player) => player.statue.set(color));
+        this.players.forEach((player) => {
+            player.statue.set("fill", color);
+        });
+
+        console.log(this.players);
     }
 
     addPlayer(player: Player) {

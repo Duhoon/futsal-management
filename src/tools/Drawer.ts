@@ -79,16 +79,22 @@ export default class FieldDrawer {
 
     removePlayer(player: Player) {
         this._removePlayer(player);
+
+        return this;
+    }
+
+    renderAll() {
+        this.canvas.renderAll();
+
+        return this;
     }
 
     private _drawPlayer(player: Player): void {
         this.canvas.add(player.statue);
-        this.canvas.renderAll();
     }
 
     private _removePlayer(player: Player): void {
         this.canvas.remove(player.statue);
-        this.canvas.renderAll();
     }
 
     save() {
