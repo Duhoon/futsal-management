@@ -71,7 +71,7 @@ export default class FieldDrawer {
 
     drawTeam(team: Team): FieldDrawer {
         for (const player of team.players) {
-            this._drawPlayer(player, team.color);
+            this._drawPlayer(player);
         }
 
         return this;
@@ -81,14 +81,14 @@ export default class FieldDrawer {
         this._removePlayer(player);
     }
 
-    private _removePlayer(player: Player): void {
-        this.canvas.remove(player.statue);
+    private _drawPlayer(player: Player): void {
+        this.canvas.add(player.statue);
+        this.canvas.renderAll();
     }
 
-    private _drawPlayer(player: Player, color: string): void {
+    private _removePlayer(player: Player): void {
         this.canvas.remove(player.statue);
-        player.statue = player.statue.set("fill", color);
-        this.canvas.add(player.statue);
+        this.canvas.renderAll();
     }
 
     save() {

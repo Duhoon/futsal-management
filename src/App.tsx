@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Field, Board } from "./components";
 import { Header } from "./components/layout";
-import Team from "./components/Field/Team";
+import Team from "./tools/Team";
 import { useViewport } from "./hooks";
-import FieldDrawer from "./components/Field/FieldDrawer";
+import FieldDrawer from "./tools/Drawer";
 import { DrawerCtx } from "./contexts/DrawerCtx";
 import * as fabric from "fabric";
 

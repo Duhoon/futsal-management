@@ -2,8 +2,8 @@ import { ChangeEvent, useContext, useState } from "react";
 import styles from "@/styles/board/squad.module.scss";
 import ColorBox from "./ColorBox";
 import { ColorChangeHandler } from "react-color";
-import Team from "../Field/Team";
-import Player from "../Field/Player";
+import Team from "../../tools/Team";
+import Player from "../../tools/Player";
 import { useViewport } from "@/hooks";
 import { DrawerCtx } from "@/contexts/DrawerCtx";
 
@@ -21,7 +21,7 @@ export default function Squad({ team, teamOrder }: SquadProps) {
     const [num, setNum] = useState(0);
 
     const increaseNum = () => {
-        if (num < 12) {
+        if (num <= 6) {
             setNum((pre) => pre + 1);
             const xDist = Math.floor((viewport!.width || 0) / 6);
             const yDist = Math.floor((viewport!.height - 70 || 0) / 3);
@@ -52,7 +52,7 @@ export default function Squad({ team, teamOrder }: SquadProps) {
         setIsColorBoxOpen(true);
     };
 
-    const handleColorChange: ColorChangeHandler = ({ hex }) => {
+    const changeColor: ColorChangeHandler = ({ hex }) => {
         setColor(hex);
         team.setColor(hex);
         setIsColorBoxOpen(false);
@@ -61,6 +61,7 @@ export default function Squad({ team, teamOrder }: SquadProps) {
 
     return (
         <div className={styles["squad-container"]}>
+            <h2 className={styles["squad-title"]}>Team {teamOrder + 1}</h2>
             <div className={styles["player-board-container"]}>
                 <button
                     className={styles["preview"]}
@@ -69,10 +70,7 @@ export default function Squad({ team, teamOrder }: SquadProps) {
                     onClick={openColorBox}
                 />
                 <input hidden />
-                <ColorBox
-                    isOpen={isColorBoxOpen}
-                    onChange={handleColorChange}
-                />
+                <ColorBox isOpen={isColorBoxOpen} onChange={changeColor} />
             </div>
             <div className={styles["num-board-container"]}>
                 <button

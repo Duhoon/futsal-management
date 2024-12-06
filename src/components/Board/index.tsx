@@ -5,7 +5,7 @@ import classNames from "classnames/bind";
 
 import Squad from "./Squad";
 
-import Team from "../Field/Team";
+import Team from "../../tools/Team";
 
 const cn = classNames.bind(styles);
 
