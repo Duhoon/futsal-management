@@ -1,8 +1,14 @@
 .squad-container {
     padding: 1rem;
     position: relative;
+
+    .squad-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
     
     .player-board-container {
+        margin-top: 1rem;
         width: 100%;
         
         .preview {
