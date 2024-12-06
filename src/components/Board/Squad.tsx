@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import styles from "@/styles/board/squad.module.scss";
 import ColorBox from "./ColorBox";
 import { ColorChangeHandler } from "react-color";
@@ -25,16 +25,15 @@ export default function Squad({ team, teamOrder }: SquadProps) {
             setNum((pre) => pre + 1);
             const xDist = Math.floor((viewport!.width || 0) / 6);
             const yDist = Math.floor((viewport!.height - 70 || 0) / 3);
-            team.players.push(
-                new Player(
-                    {
-                        x: xDist * (num + 1),
-                        y: yDist * (teamOrder + 1),
-                    },
-                    team.color,
-                ),
+            const player = new Player(
+                {
+                    x: xDist * (num + 1),
+                    y: yDist * (teamOrder + 1),
+                },
+                team.color,
             );
-            drawer.drawTeam(team);
+            team.players.push(player);
+            drawer.drawPlayer(player);
         }
     };
 
@@ -42,10 +41,11 @@ export default function Squad({ team, teamOrder }: SquadProps) {
         setNum((pre) => (pre - 1 >= 0 ? pre - 1 : pre));
         const playerRemoved = team.players.pop();
         if (playerRemoved) drawer.removePlayer(playerRemoved);
+        drawer.renderAll();
     };
 
     const changeNum = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.matchAll(/[0-9][0-9]*/g)) {
+        if (e.target.value.matchAll(/[0-6][0-6]*/g)) {
             setNum(Number(e.target.value));
             team.players = team.players.slice(0, Number(e.target.value));
         }
@@ -61,10 +61,6 @@ export default function Squad({ team, teamOrder }: SquadProps) {
         setIsColorBoxOpen(false);
         drawer.renderAll();
     };
-
-    useEffect(() => {
-        console.log(team);
-    }, [team]);
 
     return (
         <div className={styles["squad-container"]}>

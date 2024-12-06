@@ -77,6 +77,10 @@ export default class FieldDrawer {
         return this;
     }
 
+    drawPlayer(player: Player) {
+        this._drawPlayer(player);
+    }
+
     removePlayer(player: Player) {
         this._removePlayer(player);
 
