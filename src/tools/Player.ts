@@ -17,7 +17,7 @@ export default class Player {
             strokeWidth: 4,
             fill: color,
             left: coord.x,
-            right: coord.y,
+            top: coord.y,
             lockScalingX: true,
             lockScalingY: true,
         });

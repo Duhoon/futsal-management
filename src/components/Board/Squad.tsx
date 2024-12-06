@@ -6,6 +6,7 @@ import Team from "../../tools/Team";
 import Player from "../../tools/Player";
 import { useViewport } from "@/hooks";
 import { DrawerCtx } from "@/contexts/DrawerCtx";
+import { FIELD_PADDING } from "@/constants/draw";
 
 interface SquadProps {
     team: Team;
@@ -24,11 +25,11 @@ export default function Squad({ team, teamOrder }: SquadProps) {
         if (num <= 6) {
             setNum((pre) => pre + 1);
             const xDist = Math.floor((viewport!.width || 0) / 6);
-            const yDist = Math.floor((viewport!.height - 70 || 0) / 3);
+            const yHalf = Math.floor((viewport!.height - 70 || 0) / 2);
             const player = new Player(
                 {
                     x: xDist * (num + 1),
-                    y: yDist * (teamOrder + 1),
+                    y: yHalf / 2 + yHalf * teamOrder - FIELD_PADDING * 2,
                 },
                 team.color,
             );

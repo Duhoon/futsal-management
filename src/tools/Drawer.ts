@@ -1,8 +1,7 @@
 import { Canvas, Circle, Line, Rect } from "fabric";
 import Player from "./Player";
 import Team from "./Team";
-
-const fieldPadding = 20;
+import { FIELD_PADDING } from "@/constants/draw";
 
 export default class FieldDrawer {
     constructor(
@@ -29,10 +28,10 @@ export default class FieldDrawer {
         // field outline
         this.canvas.add(
             new Rect({
-                left: fieldPadding,
-                top: fieldPadding,
-                width: this.canvasEle.offsetWidth - 2 * fieldPadding,
-                height: this.canvasEle.offsetHeight - 2 * fieldPadding,
+                left: FIELD_PADDING,
+                top: FIELD_PADDING,
+                width: this.canvasEle.offsetWidth - 2 * FIELD_PADDING,
+                height: this.canvasEle.offsetHeight - 2 * FIELD_PADDING,
                 fill: "rgb(255 255 255 / 0%)",
                 stroke: "white",
                 strokeWidth: 4,
@@ -44,9 +43,9 @@ export default class FieldDrawer {
         this.canvas.add(
             new Line(
                 [
-                    0 + fieldPadding,
+                    0 + FIELD_PADDING,
                     Math.floor(this.canvasEle.offsetHeight / 2),
-                    this.canvasEle.offsetWidth - fieldPadding,
+                    this.canvasEle.offsetWidth - FIELD_PADDING,
                     Math.floor(this.canvasEle.offsetHeight / 2),
                 ],
                 {
