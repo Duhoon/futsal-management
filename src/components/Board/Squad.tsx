@@ -10,6 +10,7 @@ import styles from "@/styles/board/squad.module.scss";
 
 import { DrawerCtx } from "@/contexts/DrawerCtx";
 import { FIELD_PADDING } from "@/constants/draw";
+import { matchNames } from "@/utils/regexp";
 
 interface SquadProps {
     team: Team;
@@ -77,6 +78,17 @@ export default function Squad({ team, teamOrder }: SquadProps) {
         drawer.renderAll();
     };
 
+    const changeName = (idx: number) => {
+        return (e: ChangeEvent<HTMLInputElement>) => {
+            if (matchNames(e.target.value)) {
+                setNames((pre) => {
+                    pre[idx] = e.target.value;
+                    return [...pre];
+                });
+            }
+        };
+    };
+
     useEffect(() => {
         if (window && isColorBoxOpen) {
             setTimeout(
@@ -138,13 +150,15 @@ export default function Squad({ team, teamOrder }: SquadProps) {
                 {isListOpen &&
                     names.map((name, idx) => {
                         return (
-                            <li className={styles["list-space"]}>
+                            <li key={idx} className={styles["list-space"]}>
                                 <span className={styles["list-item-num"]}>
                                     {idx + 1}
                                 </span>
-                                <span className={styles["list-item-name"]}>
-                                    abcd{" "}
-                                </span>
+                                <input
+                                    className={styles["list-item-name"]}
+                                    value={name}
+                                    onChange={changeName(idx)}
+                                />
                             </li>
                         );
                     })}
