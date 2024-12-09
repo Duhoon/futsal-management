@@ -35,9 +35,10 @@ export default function Squad({ team, teamOrder }: SquadProps) {
             const yHalf = Math.floor((viewport!.height - 70 || 0) / 2);
             const player = new Player(
                 {
-                    x: xDist * (num + 1),
+                    x: xDist * num,
                     y: yHalf / 2 + yHalf * teamOrder - FIELD_PADDING * 2,
                 },
+                String(num + 1),
                 team.color,
             );
             team.players.push(player);
