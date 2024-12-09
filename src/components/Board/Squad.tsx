@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useViewport } from "@/hooks";
 import ColorBox from "./ColorBox";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
@@ -66,12 +66,29 @@ export default function Squad({ team, teamOrder }: SquadProps) {
         setIsColorBoxOpen(true);
     };
 
+    const closeColorBox = () => {
+        setIsColorBoxOpen(false);
+    };
+
     const changeColor: ColorChangeHandler = ({ hex }) => {
         setColor(hex);
         team.setColor(hex);
         setIsColorBoxOpen(false);
         drawer.renderAll();
     };
+
+    useEffect(() => {
+        if (window && isColorBoxOpen) {
+            setTimeout(
+                () => window.addEventListener("click", closeColorBox),
+                0,
+            );
+
+            return () => {
+                window.removeEventListener("click", closeColorBox);
+            };
+        }
+    }, [isColorBoxOpen]);
 
     return (
         <div className={styles["squad-container"]}>
