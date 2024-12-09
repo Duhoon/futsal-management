@@ -1,4 +1,4 @@
-import { Canvas, Circle, Line, Rect } from "fabric";
+import { Canvas, Circle, Group, Line, Rect } from "fabric";
 import Player from "./Player";
 import Team from "./Team";
 import { FIELD_PADDING } from "@/constants/draw";
@@ -93,11 +93,12 @@ export default class FieldDrawer {
     }
 
     private _drawPlayer(player: Player): void {
-        this.canvas.add(player.statue);
+        this.canvas.add(new Group([player.statue, player.text]));
     }
 
     private _removePlayer(player: Player): void {
         this.canvas.remove(player.statue);
+        this.canvas.remove(player.text);
     }
 
     save() {

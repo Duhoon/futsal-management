@@ -1,4 +1,4 @@
-import { Circle } from "fabric";
+import { Circle, IText } from "fabric";
 import { Coord } from "./types";
 
 export default class Player {
@@ -7,8 +7,9 @@ export default class Player {
     name: string;
     coord: Coord;
     statue: Circle;
+    text: IText;
 
-    constructor(coord: Coord, color: string) {
+    constructor(coord: Coord, text: string, color: string) {
         this.name = "";
         this.coord = coord;
         this.statue = new Circle({
@@ -21,6 +22,11 @@ export default class Player {
             lockScalingX: true,
             lockScalingY: true,
         });
+        const centerPointByPlayer = this.statue.getCenterPoint();
+
+        this.text = new IText(text);
+        this.text.set("left", centerPointByPlayer.x - this.text.width / 2);
+        this.text.set("top", centerPointByPlayer.y - this.text.height / 2);
 
         this.statue.hasControls = false;
     }
