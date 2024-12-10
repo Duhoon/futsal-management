@@ -7,7 +7,7 @@ import FieldDrawer from "./tools/Drawer";
 import { DrawerCtx } from "./contexts/DrawerCtx";
 import * as fabric from "fabric";
 
-const teams = [new Team(""), new Team("")];
+const teams = [new Team("white"), new Team("white")];
 
 function App() {
     const [viewport] = useViewport();
