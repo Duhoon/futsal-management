@@ -7,6 +7,7 @@ export const Field = forwardRef(function Field(
     ref: ForwardedRef<HTMLCanvasElement>,
 ) {
     const [viewport] = useViewport();
+    props;
 
     return (
         <main>
