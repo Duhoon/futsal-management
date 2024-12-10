@@ -1,6 +1,10 @@
+@font-face {
+  font-family: 'roboto-mono';
+  src: url("../public/fonts/RobotoMono-VariableFont_wght.ttf") format('truetype');
+}
+
 :root {
   font-weight: 500;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -18,5 +22,6 @@
 
 body {
   font-size: 1rem;
+  font-family: 'roboto-mono';
   overflow-x: hidden;
 }

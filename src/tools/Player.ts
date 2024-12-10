@@ -24,7 +24,7 @@ export default class Player {
         });
         const centerPointByPlayer = this.statue.getCenterPoint();
 
-        this.text = new IText(text);
+        this.text = new IText(text, { fontFamily: "roboto-mono" });
         this.text.set("left", centerPointByPlayer.x - this.text.width / 2);
         this.text.set("top", centerPointByPlayer.y - this.text.height / 2);
 

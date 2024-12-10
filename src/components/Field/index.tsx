@@ -3,16 +3,10 @@ import { ForwardedRef, forwardRef } from "react";
 import { useViewport } from "@/hooks";
 
 export const Field = forwardRef(function Field(
-    props,
+    props: unknown,
     ref: ForwardedRef<HTMLCanvasElement>,
 ) {
     const [viewport] = useViewport();
-
-    // useEffect(() => {
-    //     if (ref?.current && window) {
-    //         1;
-    //     }
-    // }, [players]);
 
     return (
         <main>

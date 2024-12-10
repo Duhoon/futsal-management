@@ -29,7 +29,7 @@ export default function Squad({ team, teamOrder }: SquadProps) {
     const [num, setNum] = useState(0);
 
     const increaseNum = () => {
-        if (num <= 6) {
+        if (num < 6) {
             setNum((pre) => pre + 1);
             const xDist = Math.floor((viewport!.width || 0) / 6);
             const yHalf = Math.floor((viewport!.height - 70 || 0) / 2);
