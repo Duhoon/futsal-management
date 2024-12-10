@@ -97,7 +97,11 @@ export default class FieldDrawer {
     }
 
     private _drawPlayer(player: Player): void {
-        const playerGroup = new Group([player.statue, player.text]);
+        const playerGroup = new Group([player.statue, player.text], {
+            lockScalingX: true,
+            lockScalingY: true,
+        });
+        playerGroup.hasControls = false;
         this.canvas.add(playerGroup);
         this.groups.push(playerGroup);
     }
