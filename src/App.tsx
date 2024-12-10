@@ -21,8 +21,9 @@ function App() {
     };
 
     useEffect(() => {
+        const width = viewport && viewport.width >= 600 ? 600 : viewport?.width;
         const canvas = new fabric.Canvas(ref.current!, {
-            width: viewport?.width,
+            width: width,
             height: (viewport?.height || 0) - 70,
         });
         const ctx = canvas.getContext();

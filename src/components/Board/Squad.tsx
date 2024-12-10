@@ -20,6 +20,7 @@ interface SquadProps {
 export default function Squad({ team, teamOrder }: SquadProps) {
     const drawer = useContext(DrawerCtx)!;
     const [viewport] = useViewport();
+    const width = viewport && viewport.width >= 600 ? 600 : viewport?.width;
 
     const [isColorBoxOpen, setIsColorBoxOpen] = useState(false);
     const [isListOpen, setIsListOpen] = useState(false);
@@ -31,7 +32,7 @@ export default function Squad({ team, teamOrder }: SquadProps) {
     const increaseNum = () => {
         if (num < 6) {
             setNum((pre) => pre + 1);
-            const xDist = Math.floor((viewport!.width || 0) / 6);
+            const xDist = Math.floor((width || 0) / 6);
             const yHalf = Math.floor((viewport!.height - 70 || 0) / 2);
             const player = new Player(
                 {
