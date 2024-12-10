@@ -4,11 +4,15 @@ import Team from "./Team";
 import { FIELD_PADDING } from "@/constants/draw";
 
 export default class FieldDrawer {
+    groups: Group[];
+
     constructor(
         private canvasEle: HTMLCanvasElement,
         private canvas: Canvas,
         private ctx: CanvasRenderingContext2D,
-    ) {}
+    ) {
+        this.groups = [];
+    }
 
     render() {
         this.ctx.globalCompositeOperation = "source-over";
@@ -93,12 +97,18 @@ export default class FieldDrawer {
     }
 
     private _drawPlayer(player: Player): void {
-        this.canvas.add(new Group([player.statue, player.text]));
+        const playerGroup = new Group([player.statue, player.text]);
+        this.canvas.add(playerGroup);
+        this.groups.push(playerGroup);
     }
 
     private _removePlayer(player: Player): void {
-        this.canvas.remove(player.statue);
-        this.canvas.remove(player.text);
+        this.groups.forEach((playerInField) => {
+            const [statue] = playerInField.getObjects();
+            if (statue == player.statue) {
+                this.canvas.remove(playerInField);
+            }
+        });
     }
 
     save() {
