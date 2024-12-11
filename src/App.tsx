@@ -1,11 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { Field, Board } from "./components";
 import { Header } from "./components/layout";
-import Team from "./tools/Team";
 import { useViewport } from "./hooks";
+
+import Team from "./tools/Team";
 import FieldDrawer from "./tools/Drawer";
 import { DrawerCtx } from "./contexts/DrawerCtx";
 import * as fabric from "fabric";
+
+import styles from "@/styles/app.module.scss";
 
 const teams = [new Team("white"), new Team("white")];
 
@@ -30,6 +33,9 @@ function App() {
         const fieldDrawer = new FieldDrawer(ref.current!, canvas, ctx);
         fieldDrawer.render();
         setDrawer(fieldDrawer);
+        teams.forEach((team) => {
+            fieldDrawer.drawTeam(team);
+        });
 
         return () => {
             canvas.dispose();
@@ -40,12 +46,14 @@ function App() {
         <>
             <DrawerCtx.Provider value={drawer}>
                 <Header toggleBoard={toggleIsOpenBoard} />
-                <Field ref={ref} />
-                <Board
-                    teams={teams}
-                    isOpen={isOpenBoard}
-                    toggleBoard={toggleIsOpenBoard}
-                />
+                <div className={styles["ui-wrapper"]}>
+                    <Field ref={ref} />
+                    <Board
+                        teams={teams}
+                        isOpen={isOpenBoard}
+                        toggleBoard={toggleIsOpenBoard}
+                    />
+                </div>
             </DrawerCtx.Provider>
         </>
     );
