@@ -29,3 +29,11 @@
         }
     }
 }
+
+@media screen and (min-width: 1024px) {
+    .header {
+        .menu-bar {
+            display: none;
+        }
+    }
+}
