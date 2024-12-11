@@ -87,3 +87,13 @@
         }
     }
 }
+
+@media screen and (min-width: 1024px) {
+    .squad-container {
+        
+        .list-trigger {
+            display: none;
+        }
+    }
+    
+}

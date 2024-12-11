@@ -42,3 +42,16 @@
     padding: 1rem;
   }
 }
+
+@media screen and (min-width: 1024px) {
+  .board {
+    position:static;
+    height: auto;
+
+    .head {
+      .icon-button {
+        display: none;
+      }
+    }
+  }
+}
