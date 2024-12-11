@@ -1,15 +1,38 @@
 import styles from "@/styles/field/field.module.scss";
-import { ForwardedRef, forwardRef } from "react";
+import { useRef, useEffect, useContext } from "react";
 import { useViewport } from "@/hooks";
 import "@/styles/field/field.scss";
+import * as fabric from "fabric";
+import { DrawerCtx } from "@/contexts/DrawerCtx";
+import Team from "@/tools/Team";
 
-export const Field = forwardRef(function Field(
-    props: unknown,
-    ref: ForwardedRef<HTMLCanvasElement>,
-) {
+interface FieldProps {
+    teams: Team[];
+}
+
+export default function Field({ teams }: FieldProps) {
+    const ref = useRef<HTMLCanvasElement>(null);
+    const fieldDrawer = useContext(DrawerCtx);
     const [viewport] = useViewport();
     const width = viewport && viewport.width >= 600 ? 600 : viewport?.width;
-    props;
+
+    useEffect(() => {
+        const canvas = new fabric.Canvas(ref.current!, {
+            width: width,
+            height: (viewport?.height || 0) - 70,
+        });
+        fieldDrawer.setCanvas(canvas).setCanvasEle(ref.current!);
+
+        fieldDrawer.render();
+        teams.forEach((team) => {
+            fieldDrawer.drawTeam(team);
+            // fieldDrawer.rearrangePlayer(width!);
+        });
+
+        return () => {
+            canvas.dispose();
+        };
+    }, [ref, viewport, width, teams, fieldDrawer]);
 
     return (
         <main>
@@ -21,4 +44,4 @@ export const Field = forwardRef(function Field(
             ></canvas>
         </main>
     );
-});
+}

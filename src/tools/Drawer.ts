@@ -5,18 +5,25 @@ import { FIELD_PADDING } from "@/constants/draw";
 
 export default class FieldDrawer {
     groups: Group[];
+    private canvasEle?: HTMLCanvasElement;
+    private canvas?: Canvas;
 
-    constructor(
-        private canvasEle: HTMLCanvasElement,
-        private canvas: Canvas,
-        private ctx: CanvasRenderingContext2D,
-    ) {
+    constructor() {
         this.groups = [];
     }
 
-    render() {
-        this.ctx.globalCompositeOperation = "source-over";
+    setCanvasEle(_canvasEle: HTMLCanvasElement): FieldDrawer {
+        this.canvasEle = _canvasEle;
+        return this;
+    }
 
+    setCanvas(_canvas: Canvas): FieldDrawer {
+        this.canvas = _canvas;
+        return this;
+    }
+
+    render() {
+        if (!this.canvas || !this.canvasEle) return;
         // field backgournd
         this.canvas.add(
             new Rect({
@@ -91,12 +98,14 @@ export default class FieldDrawer {
     }
 
     renderAll() {
+        if (!this.canvas || !this.canvasEle) return;
         this.canvas.renderAll();
 
         return this;
     }
 
     private _drawPlayer(player: Player): void {
+        if (!this.canvas || !this.canvasEle) return;
         const playerGroup = new Group([player.statue, player.text], {
             lockScalingX: true,
             lockScalingY: true,
@@ -110,12 +119,9 @@ export default class FieldDrawer {
         this.groups.forEach((playerInField) => {
             const [statue] = playerInField.getObjects();
             if (statue == player.statue) {
+                if (!this.canvas || !this.canvasEle) return;
                 this.canvas.remove(playerInField);
             }
         });
-    }
-
-    save() {
-        this.ctx.save();
     }
 }
