@@ -2,24 +2,28 @@
     padding: 1rem;
     position: relative;
 
-    .squad-title {
-        font-size: 1.2rem;
-        font-weight: 700;
-    }
-    
-    .player-board-container {
-        margin-top: 2rem;
-        width: 100%;
+    .preview-wrapper {
+        .squad-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
         
-        .preview {
-            display: block;
-            margin: 0 auto;
-            border: 4px solid $black-color;
-            border-radius: 100%;
-            width: 5rem;
-            height: 5rem;
+        .player-board-container {
+            margin-top: 2rem;
+            width: 100%;
+            
+            .preview {
+                display: block;
+                margin: 0 auto;
+                border: 4px solid $black-color;
+                border-radius: 100%;
+                width: 5rem;
+                height: 5rem;
+            }
         }
     }
+
+    
 
     .num-board-container {
         display: flex;
@@ -33,6 +37,7 @@
         }
 
         .button {
+            width: 100%;
             color: $white-color;
             padding: 1rem 1.5rem;
             background-color: $gray-color;
@@ -69,19 +74,32 @@
     .list {
         width: 100%;
 
-        .list-space {
-            padding: 0.5rem 0;
+        .list-item {
+            margin-top: 0.5px;
             text-align: center;
+            overflow: hidden;
+            &:first-child {
+                border-top-left-radius: $common-border-radius;
+            }
 
+            &:last-child {
+                border-bottom-left-radius: $common-border-radius
+            }
+        
             .list-item-num, .list-item-name {
                 display: inline-block;
+                padding: 0.5rem 0;
             }
 
             .list-item-num {
+                background-color: $gray-color;
+                color: $white-color;
                 width: 20%;
             }
 
             .list-item-name {
+                background-color: white;
+                padding-left: 0.5rem;
                 width: 80%;
             }
         }
@@ -90,7 +108,9 @@
 
 @media screen and (min-width: 1024px) {
     .squad-container {
-        
+        display: flex;
+        gap: 1rem;
+
         .list-trigger {
             display: none;
         }

@@ -3,14 +3,16 @@ import { useViewport } from "@/hooks";
 import ColorBox from "./ColorBox";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
 import { ColorChangeHandler } from "react-color";
-import Team from "../../tools/Team";
-import Player from "../../tools/Player";
 
 import styles from "@/styles/board/squad.module.scss";
 
 import { DrawerCtx } from "@/contexts/DrawerCtx";
 import { FIELD_PADDING } from "@/constants/draw";
 import { matchNames } from "@/utils/regexp";
+
+import Team from "../../tools/Team";
+import Player from "../../tools/Player";
+import { MAX_PLAYER_NUM } from "@/constants/squad";
 
 interface SquadProps {
     team: Team;
@@ -32,7 +34,7 @@ export default function Squad({ team, teamOrder }: SquadProps) {
     const increaseNum = () => {
         if (num < 6) {
             setNum((pre) => pre + 1);
-            const xDist = Math.floor((width || 0) / 6);
+            const xDist = Math.floor((width || 0) / MAX_PLAYER_NUM);
             const yHalf = Math.floor((viewport!.height - 70 || 0) / 2);
             const player = new Player(
                 {
@@ -104,37 +106,45 @@ export default function Squad({ team, teamOrder }: SquadProps) {
         }
     }, [isColorBoxOpen]);
 
+    useEffect(() => {
+        if (viewport && viewport.width > 1024 && !isListOpen) {
+            setIsListOpen(true);
+        }
+    }, [viewport, isListOpen]);
+
     return (
         <div className={styles["squad-container"]}>
-            <h2 className={styles["squad-title"]}>Team {teamOrder + 1}</h2>
-            <div className={styles["player-board-container"]}>
-                <button
-                    className={styles["preview"]}
-                    style={{ backgroundColor: color }}
-                    type="button"
-                    onClick={openColorBox}
-                />
-                <input hidden />
-                <ColorBox isOpen={isColorBoxOpen} onChange={changeColor} />
-            </div>
-            <div className={styles["num-board-container"]}>
-                <button
-                    className={`${styles["button"]} ${styles["button-left"]}`}
-                    onClick={decreaseNum}
-                >
-                    &lt;
-                </button>
-                <input
-                    className={styles["display"]}
-                    onChange={changeNum}
-                    value={num}
-                />
-                <button
-                    className={`${styles["button"]} ${styles["button-right"]}`}
-                    onClick={increaseNum}
-                >
-                    &gt;
-                </button>
+            <div className={styles["preview-wrapper"]}>
+                <h2 className={styles["squad-title"]}>Team {teamOrder + 1}</h2>
+                <div className={styles["player-board-container"]}>
+                    <button
+                        className={styles["preview"]}
+                        style={{ backgroundColor: color }}
+                        type="button"
+                        onClick={openColorBox}
+                    />
+                    <input hidden />
+                    <ColorBox isOpen={isColorBoxOpen} onChange={changeColor} />
+                </div>
+                <div className={styles["num-board-container"]}>
+                    <button
+                        className={`${styles["button"]} ${styles["button-left"]}`}
+                        onClick={decreaseNum}
+                    >
+                        &lt;
+                    </button>
+                    <input
+                        className={styles["display"]}
+                        onChange={changeNum}
+                        value={num}
+                    />
+                    <button
+                        className={`${styles["button"]} ${styles["button-right"]}`}
+                        onClick={increaseNum}
+                    >
+                        &gt;
+                    </button>
+                </div>
             </div>
             <div
                 className={styles["list-trigger"]}
@@ -152,7 +162,7 @@ export default function Squad({ team, teamOrder }: SquadProps) {
                 {isListOpen &&
                     names.map((name, idx) => {
                         return (
-                            <li key={idx} className={styles["list-space"]}>
+                            <li key={idx} className={styles["list-item"]}>
                                 <span className={styles["list-item-num"]}>
                                     {idx + 1}
                                 </span>
@@ -160,6 +170,7 @@ export default function Squad({ team, teamOrder }: SquadProps) {
                                     className={styles["list-item-name"]}
                                     value={name}
                                     onChange={changeName(idx)}
+                                    placeholder={"Name is empty."}
                                 />
                             </li>
                         );
