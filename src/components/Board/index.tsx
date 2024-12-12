@@ -1,11 +1,12 @@
 import styles from "@/styles/board/board.module.scss";
-import { useRef } from "react";
-import { FaX } from "react-icons/fa6";
+import { useContext, useRef } from "react";
+import { FaX, FaTrashCan } from "react-icons/fa6";
 import classNames from "classnames/bind";
 
 import Squad from "./Squad";
 
 import Team from "../../tools/Team";
+import { DrawerCtx } from "@/contexts/DrawerCtx";
 
 const cn = classNames.bind(styles);
 
@@ -17,12 +18,28 @@ interface BoardProps {
 
 export default function Board({ teams, isOpen, toggleBoard }: BoardProps) {
     const ref = useRef<HTMLDivElement>(null);
+    const drawer = useContext(DrawerCtx);
+
+    const removeAllHandler = () => {
+        teams.forEach((team) => {
+            while (team.players.length > 0) {
+                const player = team.players.pop();
+                drawer.removePlayer(player!);
+            }
+        });
+    };
 
     return (
         <div className={cn("board", { "board-collapsed": !isOpen })} ref={ref}>
             <div className={styles.head}>
+                <button className={styles["icon-button"]}>
+                    <FaTrashCan
+                        className={styles["icon"]}
+                        onClick={removeAllHandler}
+                    />
+                </button>
                 <button className={styles["icon-button"]} onClick={toggleBoard}>
-                    <FaX className={styles["x-icon"]} />
+                    <FaX className={cn([styles["icon"], styles["icon-x"]])} />
                 </button>
             </div>
             <div className={styles.body}>

@@ -22,12 +22,13 @@
   .head {
     display: flex;
     justify-content: right;
+    gap: 1rem;
 
     background-color: transparent;
     .icon-button{
       background-color: inherit;
 
-      .x-icon {
+      .icon {
         color: $white-color;
         width: 2rem;
         height: 2rem;
@@ -51,13 +52,13 @@
     height: auto;
 
     .head {
-      .icon-button {
+      .icon-x {
         display: none;
       }
     }
 
     .body {
-      margin-top: 0;
+      margin-top: 1rem;
     }
   }
 }
