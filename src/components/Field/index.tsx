@@ -1,5 +1,5 @@
 import styles from "@/styles/field/field.module.scss";
-import { useRef, useEffect, useContext } from "react";
+import { useRef, useEffect, useContext, memo } from "react";
 import { useViewport } from "@/hooks";
 import "@/styles/field/field.scss";
 import * as fabric from "fabric";
@@ -10,7 +10,7 @@ interface FieldProps {
     teams: Team[];
 }
 
-export default function Field({ teams }: FieldProps) {
+export const Field = memo(function Field({ teams }: FieldProps) {
     const ref = useRef<HTMLCanvasElement>(null);
     const fieldDrawer = useContext(DrawerCtx);
     const [viewport] = useViewport();
@@ -44,4 +44,4 @@ export default function Field({ teams }: FieldProps) {
             ></canvas>
         </main>
     );
-}
+});
