@@ -1,0 +1,39 @@
+.toggle-button {
+    display: flex;
+    justify-items: center;
+    color: $white-color;
+
+    * {
+        margin-left: 5px;
+    }
+
+    span {
+        line-height: 25px;
+    }
+
+    .toggle-button-input[type="checkbox"] {
+        appearance: none;
+        position: relative;
+        width: 50px;
+        height: 25px;
+        border-radius: 25px;
+        background-color: $white-color;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 3px;
+            transform: translate(0, -50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 100%;
+            background-color: $gray-color;
+            transition: 0.2s
+        }
+
+        &:checked::before {
+            transform: translate(23px, -50%);
+        }
+    }
+}

@@ -7,6 +7,7 @@ import Squad from "./Squad";
 
 import Team from "../../tools/Team";
 import { DrawerCtx } from "@/contexts/DrawerCtx";
+import { ToggleButton } from "../common";
 
 const cn = classNames.bind(styles);
 
@@ -32,6 +33,7 @@ export default function Board({ teams, isOpen, toggleBoard }: BoardProps) {
     return (
         <div className={cn("board", { "board-collapsed": !isOpen })} ref={ref}>
             <div className={styles.head}>
+                <ToggleButton preText="Number" proText="Name" />
                 <button className={styles["icon-button"]}>
                     <FaTrashCan
                         className={styles["icon"]}
