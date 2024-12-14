@@ -53,6 +53,8 @@
                 border-top-right-radius: $button-radius;
                 border-bottom-right-radius: $button-radius;
             }
+
+            @include button-effect;
         }
     }
 

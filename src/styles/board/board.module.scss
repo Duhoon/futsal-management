@@ -28,6 +28,7 @@
     background-color: transparent;
     .icon-button{
       background-color: inherit;
+      @include button-effect;
 
       .icon {
         color: $white-color;

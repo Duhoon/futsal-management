@@ -1,0 +1,10 @@
+@mixin button-effect {
+    &:hover {
+        cursor: pointer;
+        opacity: 50%;
+    }
+    
+    &:active {
+        opacity: 30%;
+    }
+}
