@@ -1,4 +1,17 @@
-.field {
-    margin: 0 auto;
+main {
     display: block;
+    width: 100%;
+    background-color: black;
+
+    .field {
+        background-color: inherit;
+        margin: 0 auto;
+        display: block;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    main {
+        width: 50%;
+    }
 }
