@@ -18,10 +18,10 @@
   outline: none;
   font-size: 1rem;
   font-weight: 500;
+  font-family: 'roboto-mono';
 }
 
 body {
   font-size: 1rem;
-  font-family: 'roboto-mono';
   overflow-x: hidden;
 }

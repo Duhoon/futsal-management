@@ -83,10 +83,12 @@
             overflow: hidden;
             &:first-child {
                 border-top-left-radius: $common-border-radius;
+                border-top-right-radius: $common-border-radius;
             }
 
             &:last-child {
-                border-bottom-left-radius: $common-border-radius
+                border-bottom-left-radius: $common-border-radius;
+                border-bottom-right-radius: $common-border-radius;
             }
         
             .list-item-num, .list-item-name {
@@ -100,10 +102,14 @@
                 width: 20%;
             }
 
-            .list-item-name {
+            input.list-item-name {
+                display: inline-block;
                 background-color: white;
                 padding-left: 0.5rem;
                 width: 80%;
+                &:disabled {
+                    background-color: $light-gray-color;
+                }
             }
         }
     }

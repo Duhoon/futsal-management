@@ -19,6 +19,12 @@ interface SquadProps {
     teamOrder: number;
 }
 
+function initNamesState(): string[] {
+    return Array.from({ length: 6 }).map(() => {
+        return "";
+    });
+}
+
 export default function Squad({ team, teamOrder }: SquadProps) {
     const drawer = useContext(DrawerCtx)!;
     const [viewport] = useViewport();
@@ -27,7 +33,7 @@ export default function Squad({ team, teamOrder }: SquadProps) {
     const [isColorBoxOpen, setIsColorBoxOpen] = useState(false);
     const [isListOpen, setIsListOpen] = useState(false);
 
-    const [names, setNames] = useState<string[]>([]);
+    const [names, setNames] = useState<string[]>(initNamesState);
     const [color, setColor] = useState("");
     const [num, setNum] = useState(0);
 
@@ -46,8 +52,6 @@ export default function Squad({ team, teamOrder }: SquadProps) {
             );
             team.players.push(player);
             drawer.drawPlayer(player);
-
-            setNames((pre) => [...pre, ""]);
         }
     };
 
@@ -56,8 +60,6 @@ export default function Squad({ team, teamOrder }: SquadProps) {
         const playerRemoved = team.players.pop();
         if (playerRemoved) drawer.removePlayer(playerRemoved);
         drawer.renderAll();
-
-        setNames((pre) => pre.slice(0, pre.length - 1));
     };
 
     const changeNum = (e: ChangeEvent<HTMLInputElement>) => {
@@ -160,7 +162,7 @@ export default function Squad({ team, teamOrder }: SquadProps) {
             </div>
             <ul className={styles["list"]}>
                 {isListOpen &&
-                    names.map((name, idx) => {
+                    names.map((_, idx) => {
                         return (
                             <li key={idx} className={styles["list-item"]}>
                                 <span className={styles["list-item-num"]}>
@@ -168,9 +170,10 @@ export default function Squad({ team, teamOrder }: SquadProps) {
                                 </span>
                                 <input
                                     className={styles["list-item-name"]}
-                                    value={name}
+                                    value={names[idx] || ""}
                                     onChange={changeName(idx)}
                                     placeholder={"Name is empty."}
+                                    disabled={idx > num - 1}
                                 />
                             </li>
                         );
