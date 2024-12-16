@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, useContext, useEffect, useState } from "react";
 import { useViewport } from "@/hooks";
 import ColorBox from "./ColorBox";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
@@ -13,33 +13,33 @@ import { matchNames } from "@/utils/regexp";
 import Team from "../../tools/Team";
 import Player from "../../tools/Player";
 import { MAX_PLAYER_NUM } from "@/constants/squad";
+import { SquadAction, SquadState } from ".";
+import { SquadActionType } from "./enum";
 
 interface SquadProps {
     team: Team;
     teamOrder: number;
+    contents: SquadState;
+    dispatch: Dispatch<SquadAction>;
 }
 
-function initNamesState(): string[] {
-    return Array.from({ length: 6 }).map(() => {
-        return "";
-    });
-}
-
-export default function Squad({ team, teamOrder }: SquadProps) {
+export default function Squad({
+    team,
+    teamOrder,
+    contents,
+    dispatch,
+}: SquadProps) {
     const drawer = useContext(DrawerCtx)!;
     const [viewport] = useViewport();
     const width = viewport && viewport.width >= 600 ? 600 : viewport?.width;
 
     const [isColorBoxOpen, setIsColorBoxOpen] = useState(false);
     const [isListOpen, setIsListOpen] = useState(false);
+    const { names, num, color } = contents;
 
-    const [names, setNames] = useState<string[]>(initNamesState);
-    const [color, setColor] = useState("");
-    const [num, setNum] = useState(0);
-
-    const increaseNum = () => {
+    const increaseNumHandler = () => {
         if (num < 6) {
-            setNum((pre) => pre + 1);
+            dispatch({ type: SquadActionType.INCREASE_NUM });
             const xDist = Math.floor((width || 0) / MAX_PLAYER_NUM);
             const yHalf = Math.floor((viewport!.height - 70 || 0) / 2);
             const player = new Player(
@@ -55,41 +55,45 @@ export default function Squad({ team, teamOrder }: SquadProps) {
         }
     };
 
-    const decreaseNum = () => {
-        setNum((pre) => (pre - 1 >= 0 ? pre - 1 : pre));
-        const playerRemoved = team.players.pop();
-        if (playerRemoved) drawer.removePlayer(playerRemoved);
-        drawer.renderAll();
+    const decreaseNumHandler = () => {
+        if (num > 0) {
+            dispatch({ type: SquadActionType.DECREASE_NUM });
+            const playerRemoved = team.players.pop();
+            if (playerRemoved) drawer.removePlayer(playerRemoved);
+        }
     };
 
-    const changeNum = (e: ChangeEvent<HTMLInputElement>) => {
+    const changeNumHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.value.matchAll(/[0-6][0-6]*/g)) {
-            setNum(Number(e.target.value));
+            // setNum(Number(e.target.value));
             team.players = team.players.slice(0, Number(e.target.value));
         }
     };
 
-    const openColorBox = () => {
+    const openColorBoxHandler = () => {
         setIsColorBoxOpen(true);
     };
 
-    const closeColorBox = () => {
+    const closeColorBoxHandler = () => {
         setIsColorBoxOpen(false);
     };
 
-    const changeColor: ColorChangeHandler = ({ hex }) => {
-        setColor(hex);
+    const changeColorHandler: ColorChangeHandler = ({ hex }) => {
+        dispatch({
+            type: SquadActionType.CHANGE_COLOR,
+            payload: { color: hex },
+        });
         team.setColor(hex);
         setIsColorBoxOpen(false);
         drawer.renderAll();
     };
 
-    const changeName = (idx: number) => {
+    const changeNameHandler = (index: number) => {
         return (e: ChangeEvent<HTMLInputElement>) => {
             if (matchNames(e.target.value)) {
-                setNames((pre) => {
-                    pre[idx] = e.target.value;
-                    return [...pre];
+                dispatch({
+                    type: SquadActionType.CHANGE_NAME,
+                    payload: { index, name: e.target.value },
                 });
             }
         };
@@ -98,19 +102,21 @@ export default function Squad({ team, teamOrder }: SquadProps) {
     useEffect(() => {
         if (window && isColorBoxOpen) {
             setTimeout(
-                () => window.addEventListener("click", closeColorBox),
+                () => window.addEventListener("click", closeColorBoxHandler),
                 0,
             );
 
             return () => {
-                window.removeEventListener("click", closeColorBox);
+                window.removeEventListener("click", closeColorBoxHandler);
             };
         }
     }, [isColorBoxOpen]);
 
     useEffect(() => {
-        if (viewport && viewport.width > 1024 && !isListOpen) {
-            setIsListOpen(true);
+        if (viewport) {
+            if (viewport.width >= 1024 && !isListOpen) {
+                setIsListOpen(true);
+            }
         }
     }, [viewport, isListOpen]);
 
@@ -123,26 +129,29 @@ export default function Squad({ team, teamOrder }: SquadProps) {
                         className={styles["preview"]}
                         style={{ backgroundColor: color }}
                         type="button"
-                        onClick={openColorBox}
+                        onClick={openColorBoxHandler}
                     />
                     <input hidden />
-                    <ColorBox isOpen={isColorBoxOpen} onChange={changeColor} />
+                    <ColorBox
+                        isOpen={isColorBoxOpen}
+                        onChange={changeColorHandler}
+                    />
                 </div>
                 <div className={styles["num-board-container"]}>
                     <button
                         className={`${styles["button"]} ${styles["button-left"]}`}
-                        onClick={decreaseNum}
+                        onClick={decreaseNumHandler}
                     >
                         &lt;
                     </button>
                     <input
                         className={styles["display"]}
-                        onChange={changeNum}
+                        onChange={changeNumHandler}
                         value={num}
                     />
                     <button
                         className={`${styles["button"]} ${styles["button-right"]}`}
-                        onClick={increaseNum}
+                        onClick={increaseNumHandler}
                     >
                         &gt;
                     </button>
@@ -171,7 +180,7 @@ export default function Squad({ team, teamOrder }: SquadProps) {
                                 <input
                                     className={styles["list-item-name"]}
                                     value={names[idx] || ""}
-                                    onChange={changeName(idx)}
+                                    onChange={changeNameHandler(idx)}
                                     placeholder={"Name is empty."}
                                     disabled={idx > num - 1}
                                 />
