@@ -46,8 +46,12 @@ const squadReducer: Reducer<SquadState, SquadAction> = (state, action) => {
                 num: state.num - 1,
             };
         case SquadActionType.CHANGE_NAME:
-            if (action.payload?.index && action.payload?.name !== undefined) {
+            if (
+                action.payload?.index !== undefined &&
+                action.payload?.name !== undefined
+            ) {
                 state.names[action.payload.index] = action.payload.name;
+                console.log(state.names);
                 return {
                     ...state,
                     names: [...state.names],

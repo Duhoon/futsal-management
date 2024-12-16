@@ -179,6 +179,7 @@ export default function Squad({
                                 </span>
                                 <input
                                     className={styles["list-item-name"]}
+                                    name={`name-${idx + 1}`}
                                     value={names[idx] || ""}
                                     onChange={changeNameHandler(idx)}
                                     placeholder={"Name is empty."}
