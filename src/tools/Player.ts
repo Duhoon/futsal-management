@@ -34,9 +34,11 @@ export default class Player {
             fontFamily: "roboto-mono",
             fontSize: 16,
             visible,
+            width: this.statue.width,
+            textAlign: "center",
         });
-        this.name.set("left", centerPointByPlayer.x - this.name.width / 2);
-        this.name.set("top", centerPointByPlayer.y - this.name.height / 2);
+        this.name.set("left", this.statue.left);
+        this.name.set("top", this.statue.top + this.statue.height + 5);
 
         this.statue.hasControls = false;
     }
@@ -51,6 +53,7 @@ export default class Player {
 
     setName(name: string) {
         this.name.set("text", name);
+        this.name.set("left", this.statue.getRelativeX());
     }
 
     toggleVisible() {
