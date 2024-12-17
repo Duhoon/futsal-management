@@ -1,6 +1,8 @@
 .board {
   position:fixed;
-  height: 100vh;
+  bottom: 0;
+  height: auto;
+  min-height: 100vh;
   width: 300px;
   right: 0;
   top: 0;
@@ -43,6 +45,16 @@
     border-radius: 1rem;
     background-color: $white-color;
     padding: 1rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .board {
+    .tail {
+      font-size: 0.8rem;
+      color: $white-color;
+      min-height: 70px;
+    }
   }
 }
 

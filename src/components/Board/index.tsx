@@ -144,6 +144,7 @@ export default function Board({ teams, isOpen, toggleBoard }: BoardProps) {
                     viewStatus={isViewingNumberOrName}
                 />
             </div>
+            <div className={styles.tail}>©412ock</div>
         </div>
     );
 }
