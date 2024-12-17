@@ -7,13 +7,18 @@ interface ToggleButtonProps {
     callback?: <T>(...args: T[]) => unknown;
 }
 
-export default function ToggleButton({ preText, proText }: ToggleButtonProps) {
+export default function ToggleButton({
+    preText,
+    proText,
+    callback,
+}: ToggleButtonProps) {
     const [activate, setActivate] = useState(false);
 
     return (
         <label
             className={styles["toggle-button"]}
             onClick={() => {
+                callback && callback();
                 setActivate(!activate);
             }}
         >

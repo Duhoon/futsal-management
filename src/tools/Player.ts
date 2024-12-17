@@ -1,16 +1,15 @@
-import { Circle, IText } from "fabric";
+import { Circle, IText, Textbox } from "fabric";
 import { Coord } from "./types";
 
 export default class Player {
     radius = 32;
 
-    name: string;
     coord: Coord;
     statue: Circle;
-    text: IText;
+    number: IText;
+    name: Textbox;
 
-    constructor(coord: Coord, text: string, color: string) {
-        this.name = "";
+    constructor(coord: Coord, text: string, color: string, visible: boolean) {
         this.coord = coord;
         this.statue = new Circle({
             radius: this.radius,
@@ -24,9 +23,20 @@ export default class Player {
         });
         const centerPointByPlayer = this.statue.getCenterPoint();
 
-        this.text = new IText(text, { fontFamily: "roboto-mono" });
-        this.text.set("left", centerPointByPlayer.x - this.text.width / 2);
-        this.text.set("top", centerPointByPlayer.y - this.text.height / 2);
+        this.number = new IText(text, {
+            fontFamily: "roboto-mono",
+            visible: !visible,
+        });
+        this.number.set("left", centerPointByPlayer.x - this.number.width / 2);
+        this.number.set("top", centerPointByPlayer.y - this.number.height / 2);
+
+        this.name = new Textbox("", {
+            fontFamily: "roboto-mono",
+            fontSize: 16,
+            visible,
+        });
+        this.name.set("left", centerPointByPlayer.x - this.name.width / 2);
+        this.name.set("top", centerPointByPlayer.y - this.name.height / 2);
 
         this.statue.hasControls = false;
     }
@@ -40,6 +50,11 @@ export default class Player {
     }
 
     setName(name: string) {
-        this.name = name;
+        this.name.set("text", name);
+    }
+
+    toggleVisible() {
+        this.number.set("visible", !this.number.visible);
+        this.name.set("visible", !this.name.visible);
     }
 }

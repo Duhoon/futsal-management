@@ -19,6 +19,7 @@ import { SquadActionType } from "./enum";
 interface SquadProps {
     team: Team;
     teamOrder: number;
+    viewStatus: boolean;
     contents: SquadState;
     dispatch: Dispatch<SquadAction>;
 }
@@ -26,6 +27,7 @@ interface SquadProps {
 export default function Squad({
     team,
     teamOrder,
+    viewStatus,
     contents,
     dispatch,
 }: SquadProps) {
@@ -49,6 +51,7 @@ export default function Squad({
                 },
                 String(num + 1),
                 team.color,
+                viewStatus,
             );
             team.players.push(player);
             drawer.drawPlayer(player);
@@ -95,6 +98,8 @@ export default function Squad({
                     type: SquadActionType.CHANGE_NAME,
                     payload: { index, name: e.target.value },
                 });
+                team.players[index].setName(e.target.value);
+                drawer.renderAll();
             }
         };
     };

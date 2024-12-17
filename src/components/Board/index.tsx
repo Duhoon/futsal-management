@@ -1,5 +1,5 @@
 import styles from "@/styles/board/board.module.scss";
-import { Reducer, useContext, useReducer, useRef } from "react";
+import { Reducer, useContext, useReducer, useRef, useState } from "react";
 import { FaX, FaTrashCan } from "react-icons/fa6";
 import classNames from "classnames/bind";
 
@@ -51,7 +51,6 @@ const squadReducer: Reducer<SquadState, SquadAction> = (state, action) => {
                 action.payload?.name !== undefined
             ) {
                 state.names[action.payload.index] = action.payload.name;
-                console.log(state.names);
                 return {
                     ...state,
                     names: [...state.names],
@@ -74,6 +73,7 @@ const squadReducer: Reducer<SquadState, SquadAction> = (state, action) => {
 export default function Board({ teams, isOpen, toggleBoard }: BoardProps) {
     const ref = useRef<HTMLDivElement>(null);
     const drawer = useContext(DrawerCtx);
+    const [isViewingNumberOrName, setIsViewingNumberOrName] = useState(false);
     const [squad1, squad1Dispatch] = useReducer(
         squadReducer,
         {},
@@ -100,10 +100,24 @@ export default function Board({ teams, isOpen, toggleBoard }: BoardProps) {
         });
     };
 
+    const toggleTextTypeHandler = () => {
+        teams.forEach((team) => {
+            team.players.forEach((player) => {
+                player.toggleVisible();
+            });
+        });
+        drawer.renderAll();
+        setIsViewingNumberOrName(!isViewingNumberOrName);
+    };
+
     return (
         <div className={cn("board", { "board-collapsed": !isOpen })} ref={ref}>
             <div className={styles.head}>
-                <ToggleButton preText="Number" proText="Name" />
+                <ToggleButton
+                    preText="Number"
+                    proText="Name"
+                    callback={toggleTextTypeHandler}
+                />
                 <button className={styles["icon-button"]}>
                     <FaTrashCan
                         className={styles["icon"]}
@@ -120,12 +134,14 @@ export default function Board({ teams, isOpen, toggleBoard }: BoardProps) {
                     teamOrder={0}
                     contents={squad1}
                     dispatch={squad1Dispatch}
+                    viewStatus={isViewingNumberOrName}
                 />
                 <Squad
                     team={teams[1]}
                     teamOrder={1}
                     contents={squad2}
                     dispatch={squad2Dispatch}
+                    viewStatus={isViewingNumberOrName}
                 />
             </div>
         </div>
