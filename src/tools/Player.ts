@@ -25,7 +25,6 @@ export default class Player {
 
         this.number = new IText(text, {
             fontFamily: "roboto-mono",
-            visible: !visible,
         });
         this.number.set("left", centerPointByPlayer.x - this.number.width / 2);
         this.number.set("top", centerPointByPlayer.y - this.number.height / 2);
@@ -57,7 +56,6 @@ export default class Player {
     }
 
     toggleVisible() {
-        this.number.set("visible", !this.number.visible);
         this.name.set("visible", !this.name.visible);
     }
 }

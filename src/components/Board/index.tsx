@@ -115,7 +115,7 @@ export default function Board({ teams, isOpen, toggleBoard }: BoardProps) {
             <div className={styles.head}>
                 <ToggleButton
                     preText="Number"
-                    proText="Name"
+                    proText="All"
                     callback={toggleTextTypeHandler}
                 />
                 <button className={styles["icon-button"]}>

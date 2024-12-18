@@ -54,6 +54,9 @@ export default function Squad({
                 viewStatus,
             );
             team.players.push(player);
+            if (names[team.players.length - 1]) {
+                player.setName(names[team.players.length - 1]);
+            }
             drawer.drawPlayer(player);
         }
     };
