@@ -1,6 +1,5 @@
 import { Canvas, Circle, Group, Line, Rect } from "fabric";
 import Player from "./Player";
-import Team from "./Team";
 import { FIELD_PADDING } from "@/constants/draw";
 
 export default class FieldDrawer {
@@ -79,13 +78,13 @@ export default class FieldDrawer {
         this.canvas.centerObject(fieldCircle);
     }
 
-    drawTeam(team: Team): FieldDrawer {
-        for (const player of team.players) {
-            this._drawPlayer(player);
-        }
+    // drawTeam(team: Team): FieldDrawer {
+    // for (const player of team.players) {
+    //     this._drawPlayer(player);
+    // }
 
-        return this;
-    }
+    // return this;
+    // }
 
     drawPlayer(player: Player) {
         this._drawPlayer(player);

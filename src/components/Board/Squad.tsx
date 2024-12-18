@@ -53,9 +53,9 @@ export default function Squad({
                 team.color,
                 viewStatus,
             );
-            team.players.push(player);
-            if (names[team.players.length - 1]) {
-                player.setName(names[team.players.length - 1]);
+            team.addPlayer(player);
+            if (names[team.numsOfPlayers() - 1]) {
+                player.setName(names[team.numsOfPlayers() - 1]);
             }
             drawer.drawPlayer(player);
         }
@@ -64,7 +64,7 @@ export default function Squad({
     const decreaseNumHandler = () => {
         if (num > 0) {
             dispatch({ type: SquadActionType.DECREASE_NUM });
-            const playerRemoved = team.players.pop();
+            const playerRemoved = team.removePlayer();
             if (playerRemoved) drawer.removePlayer(playerRemoved);
         }
     };
@@ -72,7 +72,7 @@ export default function Squad({
     const changeNumHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.value.matchAll(/[0-6][0-6]*/g)) {
             // setNum(Number(e.target.value));
-            team.players = team.players.slice(0, Number(e.target.value));
+            // team.players = team.players.slice(0, Number(e.target.value));
         }
     };
 
@@ -101,8 +101,12 @@ export default function Squad({
                     type: SquadActionType.CHANGE_NAME,
                     payload: { index, name: e.target.value },
                 });
-                team.players[index].setName(e.target.value);
-                drawer.renderAll();
+
+                const player = team.findPlayer(index);
+                if (player) {
+                    player.setName(e.target.value);
+                    drawer.renderAll();
+                }
             }
         };
     };

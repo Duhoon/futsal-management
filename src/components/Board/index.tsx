@@ -88,8 +88,8 @@ export default function Board({ teams, isOpen, toggleBoard }: BoardProps) {
 
     const removeAllHandler = () => {
         teams.forEach((team) => {
-            while (team.players.length > 0) {
-                const player = team.players.pop();
+            while (team.numsOfPlayers() > 0) {
+                const player = team.removePlayer();
                 drawer.removePlayer(player!);
             }
             team.color = "white";
@@ -102,9 +102,7 @@ export default function Board({ teams, isOpen, toggleBoard }: BoardProps) {
 
     const toggleTextTypeHandler = () => {
         teams.forEach((team) => {
-            team.players.forEach((player) => {
-                player.toggleVisible();
-            });
+            team.toggleUIVisisble();
         });
         drawer.renderAll();
         setIsViewingNumberOrName(!isViewingNumberOrName);
