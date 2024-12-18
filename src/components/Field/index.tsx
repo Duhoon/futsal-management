@@ -22,12 +22,8 @@ export const Field = memo(function Field({ teams }: FieldProps) {
             height: (viewport?.height || 0) - 70,
         });
         fieldDrawer.setCanvas(canvas).setCanvasEle(ref.current!);
-
-        fieldDrawer.render();
-        teams.forEach((team) => {
-            fieldDrawer.drawTeam(team);
-            // fieldDrawer.rearrangePlayer(width!);
-        });
+        fieldDrawer.drawField();
+        teams.forEach((team) => team.renderAll());
 
         return () => {
             canvas.dispose();
