@@ -8,8 +8,8 @@ import { DrawerCtx } from "./contexts/DrawerCtx";
 
 import styles from "@/styles/app.module.scss";
 
-const teams = [new Team("white"), new Team("white")];
 const fieldDrawer = new FieldDrawer();
+const teams = [new Team("white", fieldDrawer), new Team("white", fieldDrawer)];
 
 function App() {
     const [drawer] = useState<FieldDrawer>(fieldDrawer);

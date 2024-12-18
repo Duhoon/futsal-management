@@ -89,8 +89,7 @@ export default function Board({ teams, isOpen, toggleBoard }: BoardProps) {
     const removeAllHandler = () => {
         teams.forEach((team) => {
             while (team.numsOfPlayers() > 0) {
-                const player = team.removePlayer();
-                drawer.removePlayer(player!);
+                team.removePlayer();
             }
             team.color = "white";
         });

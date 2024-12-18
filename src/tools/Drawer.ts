@@ -21,7 +21,7 @@ export default class FieldDrawer {
         return this;
     }
 
-    render() {
+    drawField() {
         if (!this.canvas || !this.canvasEle) return;
         // field backgournd
         this.canvas.add(

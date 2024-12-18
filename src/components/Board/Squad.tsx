@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, useContext, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, useEffect, useState } from "react";
 import { useViewport } from "@/hooks";
 import ColorBox from "./ColorBox";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
@@ -6,7 +6,6 @@ import { ColorChangeHandler } from "react-color";
 
 import styles from "@/styles/board/squad.module.scss";
 
-import { DrawerCtx } from "@/contexts/DrawerCtx";
 import { FIELD_PADDING } from "@/constants/draw";
 import { matchNames } from "@/utils/regexp";
 
@@ -31,7 +30,6 @@ export default function Squad({
     contents,
     dispatch,
 }: SquadProps) {
-    const drawer = useContext(DrawerCtx)!;
     const [viewport] = useViewport();
     const width = viewport && viewport.width >= 600 ? 600 : viewport?.width;
 
@@ -57,15 +55,13 @@ export default function Squad({
             if (names[team.numsOfPlayers() - 1]) {
                 player.setName(names[team.numsOfPlayers() - 1]);
             }
-            drawer.drawPlayer(player);
         }
     };
 
     const decreaseNumHandler = () => {
         if (num > 0) {
             dispatch({ type: SquadActionType.DECREASE_NUM });
-            const playerRemoved = team.removePlayer();
-            if (playerRemoved) drawer.removePlayer(playerRemoved);
+            team.removePlayer();
         }
     };
 
@@ -91,7 +87,6 @@ export default function Squad({
         });
         team.setColor(hex);
         setIsColorBoxOpen(false);
-        drawer.renderAll();
     };
 
     const changeNameHandler = (index: number) => {
@@ -105,7 +100,7 @@ export default function Squad({
                 const player = team.findPlayer(index);
                 if (player) {
                     player.setName(e.target.value);
-                    drawer.renderAll();
+                    team.renderAll();
                 }
             }
         };
