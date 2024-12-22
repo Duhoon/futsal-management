@@ -4,11 +4,10 @@ import { Header } from "./components/layout";
 
 import Team from "./tools/Team";
 import FieldDrawer from "./tools/Drawer";
-import { DrawerCtx } from "./contexts/DrawerCtx";
+import { fieldDrawer, DrawerCtx } from "./contexts/DrawerCtx";
 
 import styles from "@/styles/app.module.scss";
 
-const fieldDrawer = new FieldDrawer();
 const teams = [new Team("white", fieldDrawer), new Team("white", fieldDrawer)];
 
 function App() {
