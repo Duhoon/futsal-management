@@ -12,7 +12,7 @@ export default function ToggleButton({
     proText,
     callback,
 }: ToggleButtonProps) {
-    const [activate, setActivate] = useState(false);
+    const [activate, setActivate] = useState(true);
 
     return (
         <label
@@ -26,7 +26,7 @@ export default function ToggleButton({
             <input
                 className={styles["toggle-button-input"]}
                 type={"checkbox"}
-                checked={activate}
+                value={`${activate}`}
             />
             <span>{proText}</span>
         </label>

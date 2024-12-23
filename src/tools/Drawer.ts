@@ -8,7 +8,6 @@ export default class FieldDrawer {
     private canvas?: Canvas;
 
     constructor() {
-        console.log("init");
         this.groups = [];
     }
 
