@@ -1,3 +1,4 @@
+import { debounce } from "@/utils/debounce";
 import { useState, useEffect } from "react";
 
 interface Viewport {
@@ -17,13 +18,15 @@ export function useViewport(): [
                 width: document.documentElement.clientWidth,
                 height: document.documentElement.clientHeight,
             });
-
-            window.addEventListener("resize", () => {
-                setViewport({
-                    width: document.documentElement.clientWidth,
-                    height: document.documentElement.clientHeight,
-                });
-            });
+            window.addEventListener(
+                "resize",
+                debounce(() => {
+                    setViewport({
+                        width: document.documentElement.clientWidth,
+                        height: document.documentElement.clientHeight,
+                    });
+                }),
+            );
         }
     }, []);
 
