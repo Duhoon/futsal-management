@@ -7,6 +7,7 @@ import { FieldType } from "./types";
 export default class Team {
     color: string;
     field: FieldType;
+    isNameVisible: boolean = false;
     private drawer: FieldDrawer;
     private readonly players: Player[];
 
@@ -36,9 +37,10 @@ export default class Team {
             },
             String(this.numsOfPlayers() + 1),
             this.color,
-            false,
+            this.isNameVisible,
         );
         this.players.push(_player);
+        _player.setSize(width <= 600 ? width / 600 : 1);
         this.drawer.drawPlayer(_player);
     }
 
@@ -64,10 +66,15 @@ export default class Team {
     }
 
     renderAll() {
-        this.players.forEach((player) => this.drawer.drawPlayer(player));
+        // const { width } = this.drawer.getCanvasSize();
+        // this.players.forEach((player) => {
+        //     this.drawer.drawPlayer(player);
+        //     player.setSize(width <= 600 ? width / 600 : 1);
+        // });
     }
 
     toggleUIVisisble() {
+        this.isNameVisible = !this.isNameVisible;
         this.players.forEach((player) => player.toggleVisible());
     }
 }

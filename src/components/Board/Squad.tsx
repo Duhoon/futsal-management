@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, useContext, useEffect, useState } from "react";
 import { useViewport } from "@/hooks";
 import ColorBox from "./ColorBox";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
@@ -11,6 +11,7 @@ import Team from "../../tools/Team";
 import { SquadAction, SquadState } from ".";
 import { SquadActionType } from "./enum";
 import { MAX_PLAYER_NUM } from "@/constants/squad";
+import { DrawerCtx } from "@/contexts/DrawerCtx";
 
 interface SquadProps {
     team: Team;
@@ -29,6 +30,7 @@ export default function Squad({
     const [viewport] = useViewport();
     const [isColorBoxOpen, setIsColorBoxOpen] = useState(false);
     const [isListOpen, setIsListOpen] = useState(false);
+    const drawer = useContext(DrawerCtx);
     const { names, num, color } = contents;
 
     const increaseNumHandler = () => {
@@ -84,7 +86,7 @@ export default function Squad({
                 const player = team.findPlayer(index);
                 if (player) {
                     player.setName(e.target.value);
-                    team.renderAll();
+                    drawer.renderAll();
                 }
             }
         };

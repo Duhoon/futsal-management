@@ -1,19 +1,20 @@
-import { Circle, IText, Textbox } from "fabric";
+import { Circle, Group, Textbox } from "fabric";
 import { Coord } from "./types";
 
 export default class Player {
-    radius = 32;
+    defaultRadius = 32;
     defaultFontSize = 36;
 
+    group: Group;
     coord: Coord;
     statue: Circle;
-    number: IText;
+    number: Textbox;
     name: Textbox;
 
     constructor(coord: Coord, text: string, color: string, visible: boolean) {
         this.coord = coord;
         this.statue = new Circle({
-            radius: this.radius,
+            radius: this.defaultRadius,
             stroke: "black",
             strokeWidth: 4,
             fill: color,
@@ -24,7 +25,7 @@ export default class Player {
         });
         const centerPointByPlayer = this.statue.getCenterPoint();
 
-        this.number = new IText(text, {
+        this.number = new Textbox(text, {
             fontFamily: "roboto-mono",
             fontSize: this.defaultFontSize,
         });
@@ -41,7 +42,12 @@ export default class Player {
         this.name.set("left", this.statue.left);
         this.name.set("top", this.statue.top + this.statue.height + 5);
 
-        this.statue.hasControls = false;
+        this.group = this._grouping();
+        this.group.hasControls = false;
+    }
+
+    setSize(sizeRate: number) {
+        this.group.scale(sizeRate);
     }
 
     getCoord(): Coord {
@@ -59,5 +65,12 @@ export default class Player {
 
     toggleVisible() {
         this.name.set("visible", !this.name.visible);
+    }
+
+    private _grouping(): Group {
+        return new Group([this.statue, this.number, this.name], {
+            lockScalingX: true,
+            lockScalingY: true,
+        });
     }
 }

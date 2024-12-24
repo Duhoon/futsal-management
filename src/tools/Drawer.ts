@@ -1,15 +1,12 @@
-import { Canvas, Circle, Group, Line, Rect } from "fabric";
+import { Canvas, Circle, Line, Rect } from "fabric";
 import Player from "./Player";
 import { FIELD_PADDING } from "@/constants/draw";
 
 export default class FieldDrawer {
-    groups: Group[];
     private canvasEle?: HTMLCanvasElement;
     private canvas?: Canvas;
 
-    constructor() {
-        this.groups = [];
-    }
+    constructor() {}
 
     getCanvasSize(): { width: number; height: number } {
         if (this.canvas) {
@@ -116,25 +113,11 @@ export default class FieldDrawer {
 
     private _drawPlayer(player: Player): void {
         if (!this.canvas || !this.canvasEle) return;
-        const playerGroup = new Group(
-            [player.statue, player.number, player.name],
-            {
-                lockScalingX: true,
-                lockScalingY: true,
-            },
-        );
-        playerGroup.hasControls = false;
-        this.canvas.add(playerGroup);
-        this.groups.push(playerGroup);
+        this.canvas.add(player.group);
     }
 
     private _removePlayer(player: Player): void {
-        this.groups.forEach((playerInField) => {
-            const [statue] = playerInField.getObjects();
-            if (statue == player.statue) {
-                if (!this.canvas || !this.canvasEle) return;
-                this.canvas.remove(playerInField);
-            }
-        });
+        if (!this.canvas || !this.canvasEle) return;
+        this.canvas.remove(player.group);
     }
 }
