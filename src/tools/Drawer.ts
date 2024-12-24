@@ -11,6 +11,17 @@ export default class FieldDrawer {
         this.groups = [];
     }
 
+    getCanvasSize(): { width: number; height: number } {
+        if (this.canvas) {
+            return {
+                width: this.canvas.getWidth(),
+                height: this.canvas.getHeight(),
+            };
+        }
+
+        return { width: 0, height: 0 };
+    }
+
     setCanvasEle(_canvasEle: HTMLCanvasElement): FieldDrawer {
         this.canvasEle = _canvasEle;
         return this;

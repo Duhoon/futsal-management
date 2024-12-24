@@ -3,6 +3,7 @@ import { Coord } from "./types";
 
 export default class Player {
     radius = 32;
+    defaultFontSize = 36;
 
     coord: Coord;
     statue: Circle;
@@ -25,6 +26,7 @@ export default class Player {
 
         this.number = new IText(text, {
             fontFamily: "roboto-mono",
+            fontSize: this.defaultFontSize,
         });
         this.number.set("left", centerPointByPlayer.x - this.number.width / 2);
         this.number.set("top", centerPointByPlayer.y - this.number.height / 2);

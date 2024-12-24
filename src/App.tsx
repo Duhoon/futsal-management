@@ -7,7 +7,10 @@ import { fieldDrawer, DrawerCtx } from "./contexts/DrawerCtx";
 
 import styles from "@/styles/app.module.scss";
 
-const teams = [new Team("white", fieldDrawer), new Team("white", fieldDrawer)];
+const teams = [
+    new Team("white", fieldDrawer, "upper"),
+    new Team("white", fieldDrawer, "bottom"),
+];
 
 function App() {
     const [isOpenBoard, setIsOpenBoard] = useState(false);

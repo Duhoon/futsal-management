@@ -5,15 +5,12 @@ import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
 import { ColorChangeHandler } from "react-color";
 
 import styles from "@/styles/board/squad.module.scss";
-
-import { FIELD_PADDING } from "@/constants/draw";
 import { matchNames } from "@/utils/regexp";
 
 import Team from "../../tools/Team";
-import Player from "../../tools/Player";
-import { MAX_PLAYER_NUM } from "@/constants/squad";
 import { SquadAction, SquadState } from ".";
 import { SquadActionType } from "./enum";
+import { MAX_PLAYER_NUM } from "@/constants/squad";
 
 interface SquadProps {
     team: Team;
@@ -26,33 +23,20 @@ interface SquadProps {
 export default function Squad({
     team,
     teamOrder,
-    viewStatus,
     contents,
     dispatch,
 }: SquadProps) {
     const [viewport] = useViewport();
-    const width = viewport && viewport.width >= 600 ? 600 : viewport?.width;
-
     const [isColorBoxOpen, setIsColorBoxOpen] = useState(false);
     const [isListOpen, setIsListOpen] = useState(false);
     const { names, num, color } = contents;
 
     const increaseNumHandler = () => {
-        if (num < 6) {
+        if (num < MAX_PLAYER_NUM) {
             dispatch({ type: SquadActionType.INCREASE_NUM });
-            const xDist = Math.floor((width || 0) / MAX_PLAYER_NUM);
-            const yHalf = Math.floor((viewport!.height - 70 || 0) / 2);
-            const player = new Player(
-                {
-                    x: xDist * num,
-                    y: yHalf / 2 + yHalf * teamOrder - FIELD_PADDING * 2,
-                },
-                String(num + 1),
-                team.color,
-                viewStatus,
-            );
-            team.addPlayer(player);
+            team.addPlayer();
             if (names[team.numsOfPlayers() - 1]) {
+                const player = team.findPlayer(team.numsOfPlayers() - 1)!;
                 player.setName(names[team.numsOfPlayers() - 1]);
             }
         }

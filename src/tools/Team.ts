@@ -1,15 +1,20 @@
+import { MAX_PLAYER_NUM } from "@/constants/squad";
+import { FIELD_PADDING, FIELD_TOP_OFFSET } from "@/constants/draw";
 import FieldDrawer from "./Drawer";
 import Player from "./Player";
+import { FieldType } from "./types";
 
 export default class Team {
     color: string;
+    field: FieldType;
     private drawer: FieldDrawer;
     private readonly players: Player[];
 
-    constructor(color: string, drawer: FieldDrawer) {
+    constructor(color: string, drawer: FieldDrawer, field: FieldType) {
         this.drawer = drawer;
         this.color = color;
         this.players = [];
+        this.field = field;
     }
 
     setColor(color: string) {
@@ -20,9 +25,21 @@ export default class Team {
         this.drawer.renderAll();
     }
 
-    addPlayer(player: Player) {
-        this.players.push(player);
-        this.drawer.drawPlayer(player);
+    addPlayer() {
+        const { width, height } = this.drawer.getCanvasSize();
+        const xDist = Math.floor((width - 2 * FIELD_PADDING) / MAX_PLAYER_NUM);
+        const yHalf = Math.floor((height - 2 * FIELD_TOP_OFFSET || 0) / 2);
+        const _player = new Player(
+            {
+                x: FIELD_PADDING + xDist * this.numsOfPlayers(),
+                y: yHalf + (this.field === "upper" ? 0 : FIELD_TOP_OFFSET),
+            },
+            String(this.numsOfPlayers() + 1),
+            this.color,
+            false,
+        );
+        this.players.push(_player);
+        this.drawer.drawPlayer(_player);
     }
 
     removePlayer(): Player | undefined {
